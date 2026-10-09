@@ -1,0 +1,9 @@
+00:00.286  blend            | Read blend: "/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/guitar.blend"
+Analytic top normals assigned: 11770
+Info: File exported successfully
+Info: Saved as "guitar.blend"
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+Writing to /Users/alex/Projects/alexmreis/guitar-finish-simulator/geometry/body_mesh.obj
+OBJ export of 'body_mesh.obj' took 18.86 ms
+
+Blender quit

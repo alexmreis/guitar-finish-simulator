@@ -1,0 +1,9 @@
+Info: File exported successfully
+Info: Packed 5 file(s)
+Info: Saved as "guitar.blend"
+SCENE VALIDATED {'blender_version': '5.2.2 LTS', 'render_engine': 'CYCLES', 'vertices': 35748, 'faces': 71339, 'nonmanifold_edges': 0, 'width_mm': 320, 'thickness_mm': 44, 'samples': 32, 'seed': 17, 'resolution': 800, 'view_transform': 'AgX', 'exposure': 0, 'hardware_visible': False}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+Writing to /Users/alex/Projects/alexmreis/guitar-finish-simulator/geometry/body_mesh.obj
+OBJ export of 'body_mesh.obj' took 19.74 ms
+
+Blender quit

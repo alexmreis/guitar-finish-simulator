@@ -1,0 +1,67 @@
+{
+  "source_filename": "20261009_113621.jpg",
+  "sha256": "0a23978f1bf99c686fff31689c7b6df1aa7aa75013cf6c6697bc02309c27244d",
+  "status": "simulated",
+  "rotation": 90,
+  "quads": [
+    [
+      [
+        62,
+        224
+      ],
+      [
+        986,
+        235
+      ],
+      [
+        989,
+        534
+      ],
+      [
+        47,
+        527
+      ]
+    ]
+  ],
+  "figure_type": "quilt",
+  "alignment_max_shift_fraction": 0.045,
+  "figure_calibration": [],
+  "alignment": {
+    "method": "exact mirror about board edge; figure continuous at seam",
+    "right_sample_offset_px": 0,
+    "no_synthetic_detail": true,
+    "seam_edge": "right"
+  },
+  "homographies": [
+    [
+      [
+        1.0077199878910152,
+        0.04988712811341659,
+        -73.65335594664826
+      ],
+      [
+        -0.012171868627923587,
+        1.022436964745585,
+        -228.27122424807982
+      ],
+      [
+        -1.572668632594221e-05,
+        6.453336258397787e-05,
+        1.0
+      ]
+    ]
+  ],
+  "bookmatched_pixels": [
+    602,
+    933
+  ],
+  "seam_u": 0.5,
+  "assumed_width_mm": 400,
+  "assumed_height_mm": 619.9335548172758,
+  "dimensions_measured": false,
+  "illumination_gain_bounds": [
+    0.94,
+    1.06
+  ],
+  "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+}

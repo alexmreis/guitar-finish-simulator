@@ -1,0 +1,16 @@
+{
+  "candidate": "20261009_113100.jpg",
+  "preset": "prs_reference",
+  "bookmatch": "physical",
+  "signature": "bbc99a3348b33ebb0518d9218639d2b490e44838c15657420cf2894c0ad2ca59",
+  "resolution": [
+    800,
+    800
+  ],
+  "camera": "Front",
+  "seconds": 2.79,
+  "blender_version": "5.2.2 LTS",
+  "engine": "CYCLES",
+  "samples": 32,
+  "seed": 17
+}

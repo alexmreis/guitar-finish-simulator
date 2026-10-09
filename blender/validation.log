@@ -1,0 +1,7 @@
+00:00.385  blend            | Read blend: "/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/guitar.blend"
+/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/scripts/validate.py:12: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  assert material.use_nodes
+SAVED SCENE VALIDATED {'blend_reopened': True, 'packed_textures_verified': True, 'manifold': True, 'uv_assigned': True, 'saved_preset': 'prs_reference', 'saved_palette_verified': True, 'saved_palette_hex': ['#08090A', '#18191B', '#8E806D', '#B8A48A'], 'coverage': [{'candidate': '20261009_111903.jpg', 'outside_vertices': 0}, {'candidate': '20261009_111941.jpg', 'outside_vertices': 0}, {'candidate': '20261009_112804.jpg', 'outside_vertices': 0}, {'candidate': '20261009_112900.jpg', 'outside_vertices': 0}, {'candidate': '20261009_113100.jpg', 'outside_vertices': 0}, {'candidate': '20261009_113155.jpg', 'outside_vertices': 0}, {'candidate': '20261009_113621.jpg', 'outside_vertices': 0}, {'candidate': '20261009_113831.jpg', 'outside_vertices': 0}], 'signature': '675a01e58b1e48e9ffb6f5d241d830dcea95c6568dc3ffd6ab2ade97176eb95c', 'blender_version': '5.2.2 LTS'}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

@@ -1,0 +1,9 @@
+{
+  "closed": true,
+  "self_intersections": 0,
+  "samples": 320,
+  "width_mm": 320.0,
+  "height_mm": 439.74044438356304,
+  "neck_interface": "manual neck exclusion, unseen interface provisional",
+  "strap_buttons_excluded": true
+}

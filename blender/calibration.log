@@ -1,0 +1,7 @@
+00:00.347  blend            | Read blend: "/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/guitar.blend"
+00:04.256  render           | Saved: '/Users/alex/Projects/alexmreis/guitar-finish-simulator/renders/prs_reference/20261009_113100.jpg.png'
+00:07.553  render           | Saved: '/Users/alex/Projects/alexmreis/guitar-finish-simulator/renders/prs_reference/20261009_113155.jpg.png'
+RENDER RECORDS [{"candidate": "20261009_113100.jpg", "preset": "prs_reference", "bookmatch": "physical", "signature": "59872e9f0dfb3e24b8abf6dd94dc6837fa1e941191d5f91b219823b34fbd5edb", "resolution": [800, 800], "camera": "Front", "seconds": 2.82, "blender_version": "5.2.2 LTS", "engine": "CYCLES", "samples": 32, "seed": 17}, {"candidate": "20261009_113155.jpg", "preset": "prs_reference", "bookmatch": "physical", "signature": "59872e9f0dfb3e24b8abf6dd94dc6837fa1e941191d5f91b219823b34fbd5edb", "resolution": [800, 800], "camera": "Front", "seconds": 2.76, "blender_version": "5.2.2 LTS", "engine": "CYCLES", "samples": 32, "seed": 17}]
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

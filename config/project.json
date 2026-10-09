@@ -1,0 +1,34 @@
+{
+  "body_width_mm": 320,
+  "body_thickness_mm": 44,
+  "texture_width_mm": 400,
+  "texture_height_mm": 660,
+  "outline_reference_size": [
+    1376,
+    1790
+  ],
+  "outline_roi": [
+    20,
+    880,
+    660,
+    1750
+  ],
+  "neck_exclusion": [
+    280,
+    880,
+    397,
+    1045
+  ],
+  "outline_samples": 320,
+  "spline_smoothing": 12,
+  "samples": 32,
+  "comparison_resolution": 800,
+  "enlarged_resolution": 1600,
+  "hardware_visible": false,
+  "placements": {
+    "20261009_112804.jpg": {
+      "rotation_deg": 180
+    }
+  },
+  "minimum_burst_halfwidth_mm": 100
+}

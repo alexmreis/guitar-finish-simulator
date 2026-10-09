@@ -1,0 +1,67 @@
+{
+  "source_filename": "20261009_111903.jpg",
+  "sha256": "246c8a412bb4e1e0f84287976002d3a8c0a264fe81dcc435c367d98f4bfde64f",
+  "status": "simulated",
+  "rotation": 90,
+  "quads": [
+    [
+      [
+        34,
+        207
+      ],
+      [
+        968,
+        195
+      ],
+      [
+        970,
+        481
+      ],
+      [
+        39,
+        479
+      ]
+    ]
+  ],
+  "figure_type": "flame",
+  "alignment_max_shift_fraction": 0.045,
+  "figure_calibration": [],
+  "alignment": {
+    "method": "exact mirror about board edge; figure continuous at seam",
+    "right_sample_offset_px": 0,
+    "no_synthetic_detail": true,
+    "seam_edge": "right"
+  },
+  "homographies": [
+    [
+      [
+        1.0480911190096105,
+        -0.019266380864147278,
+        -31.646957207448263
+      ],
+      [
+        0.013073436868065787,
+        1.0175491695644636,
+        -211.07717495335817
+      ],
+      [
+        5.4918138803770444e-05,
+        -1.3192060460462268e-05,
+        1.0
+      ]
+    ]
+  ],
+  "bookmatched_pixels": [
+    558,
+    933
+  ],
+  "seam_u": 0.5,
+  "assumed_width_mm": 400,
+  "assumed_height_mm": 668.8172043010753,
+  "dimensions_measured": false,
+  "illumination_gain_bounds": [
+    0.94,
+    1.06
+  ],
+  "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+}

@@ -1,0 +1,113 @@
+{
+  "source_filename": "20261009_113100.jpg",
+  "sha256": "9abf0b732e096e1f37b142d9974184f093ab2384404ba81e540a007497494880",
+  "status": "physical",
+  "rotation": 0,
+  "quads": [
+    [
+      [
+        29,
+        65
+      ],
+      [
+        275,
+        62
+      ],
+      [
+        287,
+        639
+      ],
+      [
+        37,
+        641
+      ]
+    ],
+    [
+      [
+        304,
+        59
+      ],
+      [
+        547,
+        53
+      ],
+      [
+        555,
+        635
+      ],
+      [
+        301,
+        639
+      ]
+    ]
+  ],
+  "figure_type": "flame",
+  "alignment_max_shift_fraction": 0.045,
+  "figure_calibration": [],
+  "alignment": {
+    "method": "seam-adjacent dark-feature cross-correlation; vertical translation and overlap crop",
+    "right_sample_offset_px": -3,
+    "left_crop_rows": [
+      3,
+      577
+    ],
+    "right_crop_rows": [
+      0,
+      574
+    ],
+    "correlation_before": -0.06504075229167938,
+    "correlation_after": 0.4663175940513611,
+    "max_shift_px": 26,
+    "figure_type": "flame",
+    "no_half_replaced_or_synthesized": true
+  },
+  "homographies": [
+    [
+      [
+        1.0077483591099625,
+        -0.01399650498763836,
+        -28.314929589992424
+      ],
+      [
+        0.012415553662979814,
+        1.0180754003643253,
+        -66.53495207990757
+      ],
+      [
+        7.639059131210976e-06,
+        2.8026822810904526e-05,
+        1.0
+      ]
+    ],
+    [
+      [
+        1.0347440389356057,
+        0.005352124339322038,
+        -314.87796317244414
+      ],
+      [
+        0.02606646887941699,
+        1.0556919896163772,
+        -70.21003392670904
+      ],
+      [
+        1.7517521766744392e-05,
+        7.869231455620934e-05,
+        1.0
+      ]
+    ]
+  ],
+  "bookmatched_pixels": [
+    496,
+    574
+  ],
+  "seam_u": 0.5,
+  "assumed_width_mm": 400,
+  "assumed_height_mm": 462.9032258064516,
+  "dimensions_measured": false,
+  "illumination_gain_bounds": [
+    0.94,
+    1.06
+  ],
+  "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+}

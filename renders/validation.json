@@ -1,0 +1,88 @@
+{
+  "candidate_count": 8,
+  "physical_bookmatches": 4,
+  "simulated_bookmatches": 4,
+  "render_count": 32,
+  "finish_count": 4,
+  "prs_min_resolution": [
+    1600,
+    1600
+  ],
+  "invariant_signature": "675a01e58b1e48e9ffb6f5d241d830dcea95c6568dc3ffd6ab2ade97176eb95c",
+  "all_front_scene_signatures_identical": true,
+  "source_hashes_verified": true,
+  "saved_scene": {
+    "blend_reopened": true,
+    "packed_textures_verified": true,
+    "manifold": true,
+    "uv_assigned": true,
+    "saved_preset": "prs_reference",
+    "saved_palette_verified": true,
+    "saved_palette_hex": [
+      "#08090A",
+      "#18191B",
+      "#8E806D",
+      "#B8A48A"
+    ],
+    "coverage": [
+      {
+        "candidate": "20261009_111903.jpg",
+        "outside_vertices": 0
+      },
+      {
+        "candidate": "20261009_111941.jpg",
+        "outside_vertices": 0
+      },
+      {
+        "candidate": "20261009_112804.jpg",
+        "outside_vertices": 0
+      },
+      {
+        "candidate": "20261009_112900.jpg",
+        "outside_vertices": 0
+      },
+      {
+        "candidate": "20261009_113100.jpg",
+        "outside_vertices": 0
+      },
+      {
+        "candidate": "20261009_113155.jpg",
+        "outside_vertices": 0
+      },
+      {
+        "candidate": "20261009_113621.jpg",
+        "outside_vertices": 0
+      },
+      {
+        "candidate": "20261009_113831.jpg",
+        "outside_vertices": 0
+      }
+    ],
+    "signature": "675a01e58b1e48e9ffb6f5d241d830dcea95c6568dc3ffd6ab2ade97176eb95c",
+    "blender_version": "5.2.2 LTS"
+  },
+  "mesh": {
+    "blender_version": "5.2.2 LTS",
+    "render_engine": "CYCLES",
+    "vertices": 35748,
+    "faces": 71339,
+    "nonmanifold_edges": 0,
+    "width_mm": 320,
+    "thickness_mm": 44,
+    "samples": 32,
+    "seed": 17,
+    "resolution": 800,
+    "view_transform": "AgX",
+    "exposure": 0,
+    "hardware_visible": false
+  },
+  "outline": {
+    "closed": true,
+    "self_intersections": 0,
+    "samples": 320,
+    "width_mm": 320.0,
+    "height_mm": 439.74044438356304,
+    "neck_interface": "manual neck exclusion, unseen interface provisional",
+    "strap_buttons_excluded": true
+  }
+}

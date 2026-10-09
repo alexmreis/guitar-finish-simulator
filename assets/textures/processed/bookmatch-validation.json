@@ -1,0 +1,26 @@
+[
+  {
+    "candidate": "20261009_111903.jpg",
+    "raw_mirror_error": 0,
+    "corrected_mirror_error": 1,
+    "notes": "At most one 8-bit level from floating-point illumination normalization rounding."
+  },
+  {
+    "candidate": "20261009_111941.jpg",
+    "raw_mirror_error": 0,
+    "corrected_mirror_error": 1,
+    "notes": "At most one 8-bit level from floating-point illumination normalization rounding."
+  },
+  {
+    "candidate": "20261009_113621.jpg",
+    "raw_mirror_error": 0,
+    "corrected_mirror_error": 1,
+    "notes": "At most one 8-bit level from floating-point illumination normalization rounding."
+  },
+  {
+    "candidate": "20261009_113831.jpg",
+    "raw_mirror_error": 0,
+    "corrected_mirror_error": 1,
+    "notes": "At most one 8-bit level from floating-point illumination normalization rounding."
+  }
+]

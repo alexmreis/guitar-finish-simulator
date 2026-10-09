@@ -1,0 +1,8 @@
+{
+  "candidate": "20261009_113155.jpg",
+  "preset": "natural",
+  "max_channel_difference": 0,
+  "decoded_pixel_sha256": "22c2ead9632a4edb24d701c2e441e18f8ee43ec3394f625634cdafdfd9db30a7",
+  "same_machine_same_blender": true,
+  "includes_corrected_surface_normals": true
+}

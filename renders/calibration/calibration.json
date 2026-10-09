@@ -1,0 +1,27 @@
+{
+  "candidates": [
+    "20261009_113100.jpg",
+    "20261009_113155.jpg"
+  ],
+  "reference": "prs.png",
+  "initial_issue": "Too much silver across the face; initial black perimeter was too weak; cool grey highlights needed the PRS reference natural-maple warmth",
+  "changes": {
+    "light_power_watts": [
+      15,
+      5,
+      7
+    ],
+    "sandback_exponent": "2.4 - sandback_strength",
+    "highlight_brightness": 0.65,
+    "overall_darkness": 0.75,
+    "edge_opacity": 1,
+    "edge_hold": 0.12,
+    "burst_width": 0.42,
+    "minimum_burst_halfwidth_mm": 100,
+    "highlight_palette": [
+      "#8E806D",
+      "#B8A48A"
+    ]
+  },
+  "assessment": "Neutral dark charcoal, pale natural-maple highlights from the photo-derived figure, black shadows and perimeter; studio highlight placement and source grain differ from PRS. Pencil layout marks retained. Artistic visual calibration, not measured material recovery."
+}

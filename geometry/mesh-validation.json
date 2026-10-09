@@ -1,0 +1,15 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "render_engine": "CYCLES",
+  "vertices": 35748,
+  "faces": 71339,
+  "nonmanifold_edges": 0,
+  "width_mm": 320,
+  "thickness_mm": 44,
+  "samples": 32,
+  "seed": 17,
+  "resolution": 800,
+  "view_transform": "AgX",
+  "exposure": 0,
+  "hardware_visible": false
+}

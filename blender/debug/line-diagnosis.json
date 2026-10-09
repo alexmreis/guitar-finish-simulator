@@ -1,0 +1,8 @@
+{
+  "cause": "Approximate vertex normals over irregular forearm-contour triangles created false horizontal shading bands.",
+  "fix": "Exact derivative normals on modeled top; cavity walls/perimeter retain native normals.",
+  "vertex_positions_unchanged": true,
+  "baseline_brightness_jump": 2.747,
+  "corrected_brightness_jump": 0.231,
+  "regression_limit": 1.3
+}

@@ -1,0 +1,285 @@
+{
+  "20261009_111903.jpg": {
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          34,
+          207
+        ],
+        [
+          968,
+          195
+        ],
+        [
+          970,
+          481
+        ],
+        [
+          39,
+          479
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045
+  },
+  "20261009_111941.jpg": {
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          39,
+          244
+        ],
+        [
+          985,
+          244
+        ],
+        [
+          966,
+          510
+        ],
+        [
+          57,
+          506
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "seam_edge": "left"
+  },
+  "20261009_112804.jpg": {
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          81,
+          44
+        ],
+        [
+          297,
+          23
+        ],
+        [
+          296,
+          682
+        ],
+        [
+          61,
+          671
+        ]
+      ],
+      [
+        [
+          306,
+          23
+        ],
+        [
+          531,
+          43
+        ],
+        [
+          553,
+          671
+        ],
+        [
+          304,
+          682
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_filter": "horizontal_flame",
+    "balance_figure_halves": true
+  },
+  "20261009_112900.jpg": {
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          85,
+          75
+        ],
+        [
+          294,
+          66
+        ],
+        [
+          294,
+          684
+        ],
+        [
+          72,
+          685
+        ]
+      ],
+      [
+        [
+          305,
+          66
+        ],
+        [
+          535,
+          57
+        ],
+        [
+          539,
+          709
+        ],
+        [
+          304,
+          685
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045
+  },
+  "20261009_113100.jpg": {
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          29,
+          65
+        ],
+        [
+          275,
+          62
+        ],
+        [
+          287,
+          639
+        ],
+        [
+          37,
+          641
+        ]
+      ],
+      [
+        [
+          304,
+          59
+        ],
+        [
+          547,
+          53
+        ],
+        [
+          555,
+          635
+        ],
+        [
+          301,
+          639
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045
+  },
+  "20261009_113155.jpg": {
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          23,
+          33
+        ],
+        [
+          290,
+          29
+        ],
+        [
+          290,
+          698
+        ],
+        [
+          27,
+          697
+        ]
+      ],
+      [
+        [
+          303,
+          29
+        ],
+        [
+          570,
+          19
+        ],
+        [
+          570,
+          705
+        ],
+        [
+          304,
+          698
+        ]
+      ]
+    ],
+    "figure_type": "quilt",
+    "alignment_max_shift_fraction": 0.045
+  },
+  "20261009_113621.jpg": {
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          62,
+          224
+        ],
+        [
+          986,
+          235
+        ],
+        [
+          989,
+          534
+        ],
+        [
+          47,
+          527
+        ]
+      ]
+    ],
+    "figure_type": "quilt",
+    "alignment_max_shift_fraction": 0.045
+  },
+  "20261009_113831.jpg": {
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          57,
+          228
+        ],
+        [
+          996,
+          212
+        ],
+        [
+          999,
+          507
+        ],
+        [
+          56,
+          494
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045
+  }
+}

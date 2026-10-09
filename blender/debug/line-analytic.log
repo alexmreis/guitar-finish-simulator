@@ -1,0 +1,8 @@
+00:00.296  blend            | Read blend: "/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/guitar.blend"
+/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/debug/line_probe.py:6: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  material=bpy.data.materials.new('Diagnostic uniform gloss');material.use_nodes=True
+00:02.792  render           | Saved: '/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/debug/line-analytic.png'
+Analytic top normals assigned: 11770
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

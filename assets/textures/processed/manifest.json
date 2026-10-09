@@ -1,0 +1,746 @@
+[
+  {
+    "source_filename": "20261009_111903.jpg",
+    "sha256": "246c8a412bb4e1e0f84287976002d3a8c0a264fe81dcc435c367d98f4bfde64f",
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          34,
+          207
+        ],
+        [
+          968,
+          195
+        ],
+        [
+          970,
+          481
+        ],
+        [
+          39,
+          479
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_calibration": [],
+    "alignment": {
+      "method": "exact mirror about board edge; figure continuous at seam",
+      "right_sample_offset_px": 0,
+      "no_synthetic_detail": true,
+      "seam_edge": "right"
+    },
+    "homographies": [
+      [
+        [
+          1.0480911190096105,
+          -0.019266380864147278,
+          -31.646957207448263
+        ],
+        [
+          0.013073436868065787,
+          1.0175491695644636,
+          -211.07717495335817
+        ],
+        [
+          5.4918138803770444e-05,
+          -1.3192060460462268e-05,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      558,
+      933
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 668.8172043010753,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  },
+  {
+    "source_filename": "20261009_111941.jpg",
+    "sha256": "b11b1623278f0db95597b473243b5beda01f7575735bd4d887ca40fde7d02b54",
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          39,
+          244
+        ],
+        [
+          985,
+          244
+        ],
+        [
+          966,
+          510
+        ],
+        [
+          57,
+          506
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "seam_edge": "left",
+    "figure_calibration": [],
+    "alignment": {
+      "method": "exact mirror about board edge; figure continuous at seam",
+      "right_sample_offset_px": 0,
+      "no_synthetic_detail": true,
+      "seam_edge": "left"
+    },
+    "homographies": [
+      [
+        [
+          0.9611106154632396,
+          -0.06603050029900118,
+          -21.371871930110068
+        ],
+        [
+          0.0,
+          0.9350794171841036,
+          -228.15937779292128
+        ],
+        [
+          1.622044493804958e-05,
+          -0.00014412862283800924,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      530,
+      928
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 700.377358490566,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  },
+  {
+    "source_filename": "20261009_112804.jpg",
+    "sha256": "a3505b414e2399daa88c9ef281ed8102c0a693b52f973e08f4d86c2f71fcf119",
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          81,
+          44
+        ],
+        [
+          297,
+          23
+        ],
+        [
+          296,
+          682
+        ],
+        [
+          61,
+          671
+        ]
+      ],
+      [
+        [
+          306,
+          23
+        ],
+        [
+          531,
+          43
+        ],
+        [
+          553,
+          671
+        ],
+        [
+          304,
+          682
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_filter": "horizontal_flame",
+    "balance_figure_halves": true,
+    "figure_calibration": [
+      {
+        "columns": [
+          0,
+          226
+        ],
+        "curl_percentiles": [
+          -0.02733884334564209,
+          0.0217188560962677
+        ]
+      },
+      {
+        "columns": [
+          226,
+          452
+        ],
+        "curl_percentiles": [
+          -0.03495723962783814,
+          0.03148778557777404
+        ]
+      }
+    ],
+    "alignment": {
+      "method": "seam-adjacent dark-feature cross-correlation; vertical translation and overlap crop",
+      "right_sample_offset_px": 2,
+      "left_crop_rows": [
+        0,
+        641
+      ],
+      "right_crop_rows": [
+        2,
+        643
+      ],
+      "correlation_before": 0.06343550235033035,
+      "correlation_after": 0.3736061155796051,
+      "max_shift_px": 29,
+      "figure_type": "flame",
+      "no_half_replaced_or_synthesized": true
+    },
+    "homographies": [
+      [
+        [
+          1.1262745922884234,
+          0.03592582431542019,
+          -92.80897824524077
+        ],
+        [
+          0.11159810584553813,
+          1.1478662315541066,
+          -59.545560761869275
+        ],
+        [
+          0.00025038410726090733,
+          0.00015245442627352668,
+          1.0
+        ]
+      ],
+      [
+        [
+          0.9460658153264474,
+          0.0028712164349816013,
+          -289.5621774678975
+        ],
+        [
+          -0.09073344595113844,
+          1.0207512669503085,
+          4.287155321191243
+        ],
+        [
+          -0.00020421034425460792,
+          0.000159110192381506,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      452,
+      641
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 567.2566371681415,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  },
+  {
+    "source_filename": "20261009_112900.jpg",
+    "sha256": "fdb638d555ca6c70ea4e53b22ef7c8464682b60d25f53ae9989d555fa34d9d54",
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          85,
+          75
+        ],
+        [
+          294,
+          66
+        ],
+        [
+          294,
+          684
+        ],
+        [
+          72,
+          685
+        ]
+      ],
+      [
+        [
+          305,
+          66
+        ],
+        [
+          535,
+          57
+        ],
+        [
+          539,
+          709
+        ],
+        [
+          304,
+          685
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_calibration": [],
+    "alignment": {
+      "method": "seam-adjacent dark-feature cross-correlation; vertical translation and overlap crop",
+      "right_sample_offset_px": -10,
+      "left_crop_rows": [
+        10,
+        614
+      ],
+      "right_crop_rows": [
+        0,
+        604
+      ],
+      "correlation_before": 0.013371418230235577,
+      "correlation_after": 0.20714892446994781,
+      "max_shift_px": 28,
+      "figure_type": "flame",
+      "no_half_replaced_or_synthesized": true
+    },
+    "homographies": [
+      [
+        [
+          1.057541757007365,
+          0.02253777514933727,
+          -91.58138248182631
+        ],
+        [
+          0.04663785507478581,
+          1.0830346345144708,
+          -85.1918152699421
+        ],
+        [
+          6.859506531148517e-05,
+          0.00010482686115970817,
+          1.0
+        ]
+      ],
+      [
+        [
+          1.1443726556976992,
+          0.0018487441933725895,
+          -349.1556771045609
+        ],
+        [
+          0.0441728635657861,
+          1.1288620689034212,
+          -87.97761993519056
+        ],
+        [
+          0.0002473701510697854,
+          3.6712716420807177e-05,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      432,
+      604
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 559.2592592592592,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  },
+  {
+    "source_filename": "20261009_113100.jpg",
+    "sha256": "9abf0b732e096e1f37b142d9974184f093ab2384404ba81e540a007497494880",
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          29,
+          65
+        ],
+        [
+          275,
+          62
+        ],
+        [
+          287,
+          639
+        ],
+        [
+          37,
+          641
+        ]
+      ],
+      [
+        [
+          304,
+          59
+        ],
+        [
+          547,
+          53
+        ],
+        [
+          555,
+          635
+        ],
+        [
+          301,
+          639
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_calibration": [],
+    "alignment": {
+      "method": "seam-adjacent dark-feature cross-correlation; vertical translation and overlap crop",
+      "right_sample_offset_px": -3,
+      "left_crop_rows": [
+        3,
+        577
+      ],
+      "right_crop_rows": [
+        0,
+        574
+      ],
+      "correlation_before": -0.06504075229167938,
+      "correlation_after": 0.4663175940513611,
+      "max_shift_px": 26,
+      "figure_type": "flame",
+      "no_half_replaced_or_synthesized": true
+    },
+    "homographies": [
+      [
+        [
+          1.0077483591099625,
+          -0.01399650498763836,
+          -28.314929589992424
+        ],
+        [
+          0.012415553662979814,
+          1.0180754003643253,
+          -66.53495207990757
+        ],
+        [
+          7.639059131210976e-06,
+          2.8026822810904526e-05,
+          1.0
+        ]
+      ],
+      [
+        [
+          1.0347440389356057,
+          0.005352124339322038,
+          -314.87796317244414
+        ],
+        [
+          0.02606646887941699,
+          1.0556919896163772,
+          -70.21003392670904
+        ],
+        [
+          1.7517521766744392e-05,
+          7.869231455620934e-05,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      496,
+      574
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 462.9032258064516,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  },
+  {
+    "source_filename": "20261009_113155.jpg",
+    "sha256": "84c91a30262e9572a261decf6fac6f63b1adfd387c5ec8eb61681d728fd4d47d",
+    "status": "physical",
+    "rotation": 0,
+    "quads": [
+      [
+        [
+          23,
+          33
+        ],
+        [
+          290,
+          29
+        ],
+        [
+          290,
+          698
+        ],
+        [
+          27,
+          697
+        ]
+      ],
+      [
+        [
+          303,
+          29
+        ],
+        [
+          570,
+          19
+        ],
+        [
+          570,
+          705
+        ],
+        [
+          304,
+          698
+        ]
+      ]
+    ],
+    "figure_type": "quilt",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_calibration": [],
+    "alignment": {
+      "method": "seam-adjacent dark-feature cross-correlation; vertical translation and overlap crop",
+      "right_sample_offset_px": -2,
+      "left_crop_rows": [
+        2,
+        667
+      ],
+      "right_crop_rows": [
+        0,
+        665
+      ],
+      "correlation_before": 0.19371920824050903,
+      "correlation_after": 0.2977008819580078,
+      "max_shift_px": 30,
+      "figure_type": "quilt",
+      "no_half_replaced_or_synthesized": true
+    },
+    "homographies": [
+      [
+        [
+          0.9960356117370468,
+          -0.006000214528536416,
+          -22.710811990510376
+        ],
+        [
+          0.014798359770235716,
+          0.9877905146632333,
+          -32.93744925860212
+        ],
+        [
+          2.7945603621122966e-05,
+          -2.2728085335365246e-05,
+          1.0
+        ]
+      ],
+      [
+        [
+          1.0516858660252693,
+          -0.001572026705568366,
+          -318.6152286311952
+        ],
+        [
+          0.03887068957547275,
+          1.0378474116651222,
+          -41.87539387965679
+        ],
+        [
+          9.791396255908437e-05,
+          -5.909874832963949e-06,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      530,
+      665
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 501.8867924528302,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  },
+  {
+    "source_filename": "20261009_113621.jpg",
+    "sha256": "0a23978f1bf99c686fff31689c7b6df1aa7aa75013cf6c6697bc02309c27244d",
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          62,
+          224
+        ],
+        [
+          986,
+          235
+        ],
+        [
+          989,
+          534
+        ],
+        [
+          47,
+          527
+        ]
+      ]
+    ],
+    "figure_type": "quilt",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_calibration": [],
+    "alignment": {
+      "method": "exact mirror about board edge; figure continuous at seam",
+      "right_sample_offset_px": 0,
+      "no_synthetic_detail": true,
+      "seam_edge": "right"
+    },
+    "homographies": [
+      [
+        [
+          1.0077199878910152,
+          0.04988712811341659,
+          -73.65335594664826
+        ],
+        [
+          -0.012171868627923587,
+          1.022436964745585,
+          -228.27122424807982
+        ],
+        [
+          -1.572668632594221e-05,
+          6.453336258397787e-05,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      602,
+      933
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 619.9335548172758,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  },
+  {
+    "source_filename": "20261009_113831.jpg",
+    "sha256": "65e9e1ae2d72f0f029caf9b46db9e74654097fa444f02b057aedecdd232cda5a",
+    "status": "simulated",
+    "rotation": 90,
+    "quads": [
+      [
+        [
+          57,
+          228
+        ],
+        [
+          996,
+          212
+        ],
+        [
+          999,
+          507
+        ],
+        [
+          56,
+          494
+        ]
+      ]
+    ],
+    "figure_type": "flame",
+    "alignment_max_shift_fraction": 0.045,
+    "figure_calibration": [],
+    "alignment": {
+      "method": "exact mirror about board edge; figure continuous at seam",
+      "right_sample_offset_px": 0,
+      "no_synthetic_detail": true,
+      "seam_edge": "right"
+    },
+    "homographies": [
+      [
+        [
+          1.1213886417118153,
+          0.004215746773352695,
+          -64.88034284189787
+        ],
+        [
+          0.01819188308164356,
+          1.0676361383539574,
+          -244.45797688035597
+        ],
+        [
+          0.00011732341201051318,
+          1.5423581685556762e-05,
+          1.0
+        ]
+      ]
+    ],
+    "bookmatched_pixels": [
+      562,
+      941
+    ],
+    "seam_u": 0.5,
+    "assumed_width_mm": 400,
+    "assumed_height_mm": 669.7508896797153,
+    "dimensions_measured": false,
+    "illumination_gain_bounds": [
+      0.94,
+      1.06
+    ],
+    "notes": "Pencil marks, knots, and spalting retained. Crop corners manually surveyed from source. Width is a visual-study assumption, not evidence of usable blank size."
+  }
+]
