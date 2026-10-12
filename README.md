@@ -1,5 +1,12 @@
 # Guitar finish simulator
 
+## Latest full-guitar model
+
+Open **`blender/full_guitar.blend`** for the complete instrument with the approved Sabre-style carve. Full-size front, three-quarter, rear, and carve-detail images of the rotated `20261009_112804.jpg` top are in `renders/full_guitar/hero/{prs_reference,extreme_black}`. Eight-top full-guitar grids for all four finishes are in `renders/full_guitar/contact_sheets`.
+
+The earlier `blender/guitar.blend` and body-only grids retain the preceding body study. The full-instrument scene uses the updated continuous front/rear carve, 44 mm center thickness and 12 mm nominal rim before 2 mm edge rounding.
+
+
 A deterministic photo-to-Blender pipeline for the eight supplied maple candidates. Actual photographs supply the grain; a single fixed body mesh supplies the silhouette; shader controls supply the finish. No generated imagery or synthesized wood is used.
 
 ## Open the project
@@ -87,3 +94,63 @@ Save a configured finish into the existing project:
 ```
 
 The top uses analytically computed normals from the modeled forearm contour, preserving pocket-wall and perimeter normals. This prevents straight shading creases and false diagonal bands caused by interpolating normals over irregular triangles. A uniform-gloss regression probe in `blender/debug/line_probe.py` checks the reported waist region independently of the wood texture.
+
+## Full-instrument specifications and reproduction
+
+The PDF and supplied reference drawings are copied into `assets/references`. `config/full_guitar.json` contains the instrument dimensions and assumptions. The body retains the Umbraeternal outline; its front and rear rise smoothly from the thin rim to the center. The tapered body is a uniform constrained triangulation sampled from a smoothed physical distance field, with explicit surface normals and a closed manifold mesh. `geometry/full_guitar/body-section.svg` shows the nominal carve before perimeter rounding. `carved_body.obj` supplies the carved body, and the full `.blend` contains every editable component.
+
+The full model includes:
+
+- 647.7 mm (25.5 inch) scale; 22 stainless frets with 2.8 mm jumbo crowns.
+- 41.9 mm nut, 55.5 mm target last-fret width, 241.3 mm (9.5 inch) fretboard radius.
+- Satin maple fretboard, flush black blocks and Ankh, black binding and 2 mm white side dots.
+- Three maple neck sections with two 2.5 mm walnut stripes; 21.5/22.5 mm neck thickness at frets 1/12, with an approximate rounded set-neck heel.
+- Illustrated angled headstock with actual matching wood-photo veneer, black Tusq nut slots, six 9–46 strings and four left/two right tuners.
+- Tuner exteriors based on the latest dimensioned drawing: 39 mm overall envelope, 15.5 mm housing and 22.9 mm fixing envelope. The rounded button silhouette is surveyed from that drawing; unprovided depths remain approximate.
+- Gotoh-style recessed bridge: 83.5 × 40 mm plate, 54 mm string spread, 56 mm post pitch and 6 mm tremolo arm.
+- Direct-mounted brushed black nickel humbucker covers and a black single-width middle pickup, black dome knobs, selector, strap locks, side barrel jack, rear covers and battery enclosure.
+
+The manufacturer components are exterior visual models, not supplied factory CAD. Exact internal machining, rear routing, electronics, neck scan, set-neck engineering and headstock angle were not provided. The C profile and 12° headstock angle are provisional. Rear/sides are modeled with a dark glossy finish; the body timber species and its actual grain were not supplied. Neck/fretboard use plain maple color rather than fabricated grain. The matching headstock veneer samples a separate region of the same real photo at the same assumed physical scale; this does not prove a suitable remnant can be cut from the actual blank.
+
+Reproduce the complete full-instrument package:
+
+```sh
+.venv/bin/python full_guitar_pipeline.py --blender /Applications/Blender.app/Contents/MacOS/Blender
+```
+
+Individual geometry and render commands:
+
+```sh
+.venv/bin/python prepare_full_guitar.py
+/Applications/Blender.app/Contents/MacOS/Blender -b blender/guitar.blend --python-exit-code 1 --python blender/scripts/full_guitar.py
+/Applications/Blender.app/Contents/MacOS/Blender -b blender/full_guitar.blend --python-exit-code 1 --python blender/scripts/render_full_guitar.py -- --preset prs_reference --camera all
+/Applications/Blender.app/Contents/MacOS/Blender -b blender/full_guitar.blend --python-exit-code 1 --python blender/scripts/render_full_guitar.py -- --preset all --all --comparison
+.venv/bin/python full_guitar_comparisons.py
+```
+
+Use `--candidate SOURCE.jpg` for a specific top, `--preview` for quick iterations, and `--camera front|perspective|rear|carve` for a single view. The batch renderer updates body and headstock materials together. To save a configured finish/candidate into the editable full scene:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender -b blender/full_guitar.blend --python-exit-code 1 --python blender/scripts/save_full_finish.py -- --preset extreme_black --candidate 20261009_112804.jpg
+```
+
+Body/headstock controls are editable in the Shader Editor. CLI runs reapply `config/finishes.json`; manual body-material edits require matching edits to the copied headstock material, or the renderer's synchronization step. Hardware objects and cameras remain separate editable objects.
+
+Actual full-instrument execution uses Blender 5.2.2 LTS and Cycles, fixed exposure 0 and seed 17. Full-size views use 64 samples: front/rear 1100 × 2600, perspective 1800 × 2200, carve detail 1600 × 1600. Comparisons use 48 samples at 800 × 1800. All candidates share geometry, camera fixtures, lights and exposure. Scene signatures include vertices, faces, UVs, normals, modifiers, object transforms, light settings, camera settings and color management.
+
+`blender/full_guitar/validation.json` records measurements on the saved model: 44.000 mm center thickness; 21.503/22.497 mm neck thickness; 41.900 mm nut; 55.461 mm last-fret width (within 0.1 mm of target); correct fret positions and radius; 4L/2R tuners; correct bridge envelope; positive string-to-fret clearance. The body has 17,457 vertices and 30,280 faces with zero nonmanifold edges. `renders/full_guitar/validation.json` verifies all 32 comparison images and eight full-size views against the reopened scene signature and original-photo hashes. Execution logs are in `blender/full_guitar`.
+
+## Softer material reflections with the original studio rig
+
+The original five studio lights are restored: key/fill 6/3 W, headstock rim 3 W, rear key/fill 8/3 W, world strength 0.25. Softboxes remain visible to glossy rays; there are no hardware-only lights. Exposure, cameras, geometry, and photograph placement are fixed.
+
+All four finish presets now use coat weight 0.12, coat roughness 0.24, base roughness 0.32, and Specular IOR Level 0.15. These artistic satin finish controls reduce the broad reflection over the wood while retaining soft curvature highlights. Stain palettes and photograph-derived figure are unchanged. Body and photographed headstock veneer share the controls; hardware and neck retain their existing materials. Earlier body-only renders are historical and require rerendering to show the new material controls.
+
+Apply lighting and save the selected material without rebuilding geometry:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender -b blender/full_guitar.blend --python-exit-code 1 --python blender/scripts/update_full_lighting.py
+/Applications/Blender.app/Contents/MacOS/Blender -b blender/full_guitar.blend --python-exit-code 1 --python blender/scripts/save_full_finish.py -- --preset prs_reference --candidate 20261009_112804.jpg
+```
+
+Regenerate images with `render_full_guitar.py`, then refresh sheets with `full_guitar_comparisons.py`. Lighting visibility/linking settings are included in the common scene signature.

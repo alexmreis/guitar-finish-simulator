@@ -1,0 +1,5 @@
+00:00.368  blend            | Read blend: "/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/full_guitar.blend"
+{'lights': [{'name': 'Full key', 'energy': 6.0, 'visible_glossy': True, 'linked': False}, {'name': 'Full fill', 'energy': 3.0, 'visible_glossy': True, 'linked': False}, {'name': 'Headstock rim', 'energy': 3.0, 'visible_glossy': True, 'linked': False}, {'name': 'Rear key', 'energy': 8.0, 'visible_glossy': True, 'linked': False}, {'name': 'Rear fill', 'energy': 3.0, 'visible_glossy': True, 'linked': False}], 'materials': {'Photo wood / stain / perimeter burst / clearcoat': {'Coat Weight': 0.0, 'Coat Roughness': 0.029999999329447746, 'Roughness': 0.5, 'Specular IOR Level': 0.15000000596046448}, 'Matching photographed maple headstock veneer': {'Coat Weight': 0.0, 'Coat Roughness': 0.029999999329447746, 'Roughness': 0.5, 'Specular IOR Level': 0.15000000596046448}}, 'world_strength': 0.25}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

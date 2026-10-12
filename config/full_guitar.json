@@ -1,0 +1,122 @@
+{
+  "scale_length_mm": 647.7,
+  "nut_width_mm": 41.9,
+  "last_fret_width_mm": 55.5,
+  "fret_count": 22,
+  "fret_width_mm": 2.8,
+  "fretboard_radius_mm": 241.3,
+  "neck_thickness_first_mm": 21.5,
+  "neck_thickness_twelfth_mm": 22.5,
+  "body_center_thickness_mm": 44,
+  "body_rim_thickness_mm": 12,
+  "edge_round_mm": 2,
+  "maple_top_mm": 12,
+  "carve_transition_mm": 72,
+  "headstock_angle_deg": 12,
+  "headstock_thickness_mm": 15,
+  "walnut_stripe_mm": 2.5,
+  "bridge_plate_width_mm": 83.5,
+  "bridge_plate_depth_mm": 40,
+  "bridge_string_spread_mm": 54,
+  "bridge_pivot_pitch_mm": 56,
+  "bridge_stud_diameter_mm": 10,
+  "bridge_arm_diameter_mm": 6,
+  "tuner_post_diameter_mm": 6,
+  "tuner_button_width_mm": 17.6,
+  "tuner_button_height_mm": 12,
+  "tuner_button_depth_mm": 8,
+  "tuner_housing_diameter_mm": 18,
+  "default_candidate": "20261009_112804.jpg",
+  "default_preset": "prs_reference",
+  "samples": 64,
+  "front_resolution": [
+    1100,
+    2600
+  ],
+  "perspective_resolution": [
+    1800,
+    2200
+  ],
+  "assumptions": [
+    "Body carve thickness 44 mm center / 12 mm rim approved by user; exact reference guitar measurements unavailable.",
+    "Headstock angle 12 degrees, C neck profile and a set-neck heel are visual approximations; scanned Fender neck data not supplied.",
+    "Latest dimensioned tuner drawing overrides earlier diagrams: 39 mm overall, 22.9 mm envelope, 15.5 mm housing height, 10 mm mounting hole and 7.8 mm fixing offset. Undimensioned post/button depths are inferred visually.",
+    "Gotoh bridge outer dimensions and 54 mm string spread follow supplied drawing; internal machining and exact tremolo routing are not construction drawings.",
+    "Headstock veneer samples the same photographed candidate at the same assumed physical texture scale, with a separate center crop. Actual remnant-cut feasibility is not established.",
+    "Rear/sides use near-black translucent visual finish; underlying body timber is unspecified, so no invented body-grain texture is added."
+  ],
+  "tuner_overall_height_mm": 39,
+  "tuner_housing_envelope_mm": 22.9,
+  "tuner_housing_height_mm": 15.5,
+  "tuner_mount_hole_mm": 10,
+  "tuner_screw_offset_mm": 7.8,
+  "tuner_screw_hole_mm": 2.4,
+  "studio_lights": [
+    {
+      "name": "Full key",
+      "location": [
+        -0.55,
+        0.3,
+        1.0
+      ],
+      "energy": 6,
+      "width": 0.22,
+      "height": 1.2,
+      "specular_factor": 1,
+      "visible_glossy": true
+    },
+    {
+      "name": "Full fill",
+      "location": [
+        0.65,
+        0.2,
+        1.1
+      ],
+      "energy": 3,
+      "width": 0.3,
+      "height": 1.1,
+      "specular_factor": 1,
+      "visible_glossy": true
+    },
+    {
+      "name": "Headstock rim",
+      "location": [
+        -0.5,
+        1.0,
+        0.5
+      ],
+      "energy": 3,
+      "width": 0.25,
+      "height": 0.6,
+      "specular_factor": 1,
+      "visible_glossy": true
+    },
+    {
+      "name": "Rear key",
+      "location": [
+        -0.55,
+        0.35,
+        -1.05
+      ],
+      "energy": 8,
+      "width": 0.22,
+      "height": 1.2,
+      "specular_factor": 1,
+      "visible_glossy": true
+    },
+    {
+      "name": "Rear fill",
+      "location": [
+        0.6,
+        0.1,
+        -1.15
+      ],
+      "energy": 3,
+      "width": 0.28,
+      "height": 1.1,
+      "specular_factor": 1,
+      "visible_glossy": true
+    }
+  ],
+  "studio_world_strength": 0.25
+}

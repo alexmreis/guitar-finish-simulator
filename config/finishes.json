@@ -13,9 +13,9 @@
     "burst_exponent": 1,
     "transition_position": 1,
     "burst_color": "#08090A",
-    "coat_weight": 1,
-    "coat_roughness": 0.11,
-    "base_roughness": 0.25,
+    "coat_weight": 0.12,
+    "coat_roughness": 0.24,
+    "base_roughness": 0.32,
     "ior": 1.5,
     "bump_strength": 0,
     "palette": [
@@ -24,7 +24,8 @@
       "#64676C",
       "#888B90"
     ],
-    "edge_hold": 0
+    "edge_hold": 0,
+    "specular_ior_level": 0.15
   },
   "charcoal": {
     "label": "Dark Charcoal",
@@ -40,9 +41,9 @@
     "burst_exponent": 1,
     "transition_position": 1,
     "burst_color": "#08090A",
-    "coat_weight": 1,
-    "coat_roughness": 0.12,
-    "base_roughness": 0.25,
+    "coat_weight": 0.12,
+    "coat_roughness": 0.24,
+    "base_roughness": 0.32,
     "ior": 1.5,
     "bump_strength": 0,
     "palette": [
@@ -51,7 +52,8 @@
       "#64676C",
       "#888B90"
     ],
-    "edge_hold": 0
+    "edge_hold": 0,
+    "specular_ior_level": 0.15
   },
   "prs_reference": {
     "label": "PRS-Inspired Charcoal Black Burst",
@@ -67,9 +69,9 @@
     "burst_exponent": 0.85,
     "transition_position": 1,
     "burst_color": "#020304",
-    "coat_weight": 1,
-    "coat_roughness": 0.09,
-    "base_roughness": 0.23,
+    "coat_weight": 0.12,
+    "coat_roughness": 0.24,
+    "base_roughness": 0.32,
     "ior": 1.5,
     "bump_strength": 0,
     "palette": [
@@ -78,7 +80,8 @@
       "#8E806D",
       "#B8A48A"
     ],
-    "edge_hold": 0.12
+    "edge_hold": 0.12,
+    "specular_ior_level": 0.15
   },
   "extreme_black": {
     "label": "Extreme Black",
@@ -94,9 +97,9 @@
     "burst_exponent": 1,
     "transition_position": 1,
     "burst_color": "#010203",
-    "coat_weight": 1,
-    "coat_roughness": 0.1,
-    "base_roughness": 0.25,
+    "coat_weight": 0.12,
+    "coat_roughness": 0.24,
+    "base_roughness": 0.32,
     "ior": 1.5,
     "bump_strength": 0,
     "palette": [
@@ -105,6 +108,7 @@
       "#8E806D",
       "#B8A48A"
     ],
-    "edge_hold": 0.12
+    "edge_hold": 0.12,
+    "specular_ior_level": 0.15
   }
 }

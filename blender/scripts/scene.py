@@ -93,6 +93,7 @@ def material():
 
 def set_finish(preset,candidate):
     m=bpy.data.materials['Photo wood / stain / perimeter burst / clearcoat']; ns=m.node_tree.nodes
+    ns['Gloss clearcoat'].inputs['Specular IOR Level'].default_value=PRESETS[preset].get('specular_ior_level',.5)
     for key,value in PRESETS[preset].items():
         if key in ns and isinstance(value,(float,int)): ns[key].outputs[0].default_value=value
     for element,hexcolor in zip(ns['Neutral charcoal palette'].color_ramp.elements,PRESETS[preset]['palette']): element.color=color(hexcolor)

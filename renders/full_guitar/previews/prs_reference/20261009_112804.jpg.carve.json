@@ -1,0 +1,21 @@
+{
+  "candidate": "20261009_112804.jpg",
+  "preset": "prs_reference",
+  "bookmatch": "physical",
+  "camera": "carve",
+  "geometry_signature": "5577f23fc89ef8dd7412fd0c962b43630931b18b586617b8b554f57869604140",
+  "resolution": [
+    1000,
+    1000
+  ],
+  "samples": 24,
+  "seed": 17,
+  "engine": "CYCLES",
+  "blender_version": "5.2.2 LTS",
+  "seconds": 3.69,
+  "texture_placement": {
+    "rotation_deg": 180
+  },
+  "body_center_mm": 44,
+  "nominal_body_rim_mm": 12
+}

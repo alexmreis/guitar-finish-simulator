@@ -1,0 +1,22 @@
+00:00.282  blend            | Read blend: "/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/guitar.blend"
+/Users/alex/Projects/alexmreis/guitar-finish-simulator/blender/scripts/full_guitar.py:25: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.get(name) or bpy.data.materials.new(name);m.use_nodes=True
+Uniform carved cap: 7076 vertices, 13830 triangles
+Carved shell constructed; rounding perimeter
+Routing: Neck pickup route
+Routing: Bridge pickup route
+Routing: Single-width pickup route
+Routing: Recessed 510 tremolo
+Body validated; constructing neck
+Constructing headstock and hardware
+Uniform carved cap: 1590 vertices, 3174 triangles
+Uniform carved cap: 1040 vertices, 1525 triangles
+Info: File exported successfully
+Info: Packed 1 file(s)
+Info: Saved as "full_guitar.blend"
+FULL GUITAR VALIDATED {'body_vertices': 17457, 'body_faces': 30280, 'nonmanifold_edges': 0, 'volume_m3': 0.0027179379968147277, 'center_thickness_mm': 44, 'nominal_rim_thickness_mm': 12, 'edge_round_mm': 2, 'blender_version': '5.2.2 LTS', 'engine': 'CYCLES', 'scale_length_mm': 647.7, 'frets': 22, 'nut_width_mm': 41.9, 'last_fret_width_mm': 55.5, 'fretboard_radius_mm': 241.3, 'tuners_left': 4, 'tuners_right': 2, 'string_count': 6, 'bridge_width_mm': 83.5, 'bridge_string_spread_mm': 54, 'samples': 64, 'assumptions': ['Body carve thickness 44 mm center / 12 mm rim approved by user; exact reference guitar measurements unavailable.', 'Headstock angle 12 degrees, C neck profile and a set-neck heel are visual approximations; scanned Fender neck data not supplied.', 'Latest dimensioned tuner drawing overrides earlier diagrams: 39 mm overall, 22.9 mm envelope, 15.5 mm housing height, 10 mm mounting hole and 7.8 mm fixing offset. Undimensioned post/button depths are inferred visually.', 'Gotoh bridge outer dimensions and 54 mm string spread follow supplied drawing; internal machining and exact tremolo routing are not construction drawings.', 'Headstock veneer samples the same photographed candidate at the same assumed physical texture scale, with a separate center crop. Actual remnant-cut feasibility is not established.', 'Rear/sides use near-black translucent visual finish; underlying body timber is unspecified, so no invented body-grain texture is added.'], 'geometry_signature': '39cb089d5f82b6375ff39c0f61f3e55a21fd5bd03b8cc719a7d1c7ddaad9f5da'}
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+Writing to /Users/alex/Projects/alexmreis/guitar-finish-simulator/geometry/full_guitar/carved_body.obj
+OBJ export of 'carved_body.obj' took 10.64 ms
+
+Blender quit

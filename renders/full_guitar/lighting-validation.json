@@ -1,0 +1,15 @@
+{
+  "sample_candidate": "20261009_112804.jpg",
+  "view": "carve",
+  "bright_reflection_fraction_before": 0.03183943661971831,
+  "bright_reflection_fraction_after": 0.0,
+  "threshold_8bit": 180,
+  "region_pixels": [
+    70,
+    350,
+    780,
+    850
+  ],
+  "materials_geometry_cameras_unchanged": true,
+  "note": "Comparison of resized previous full-size render and current preview; region includes the broad body reflections."
+}
