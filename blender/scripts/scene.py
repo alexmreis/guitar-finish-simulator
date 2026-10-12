@@ -83,7 +83,8 @@ def material():
     burst=mathnode('ADD','Burst opacity',mathnode('MULTIPLY','Opacity gradient',burst,opacityrange),controls['inner_opacity'])
     mix=node('ShaderNodeMixRGB','Transparent perimeter burst'); wire(burst,mix.inputs[0]); wire(stain.outputs[0],mix.inputs[1]); mix.inputs[2].default_value=color('#08090A')
     bsdf=node('ShaderNodeBsdfPrincipled','Gloss clearcoat'); wire(mix.outputs[0],bsdf.inputs['Base Color'])
-    for key,socket in [('coat_weight','Coat Weight'),('coat_roughness','Coat Roughness'),('base_roughness','Roughness'),('ior','IOR')]: wire(controls[key],bsdf.inputs[socket])
+    for key,socket in [('coat_weight','Coat Weight'),('coat_roughness','Coat Roughness'),('base_roughness','Roughness'),('ior','IOR'),('specular_ior_level','Specular IOR Level')]:
+        if key in controls:wire(controls[key],bsdf.inputs[socket])
     bump=node('ShaderNodeBump','Optional restrained photo bump'); wire(controls['bump_strength'],bump.inputs['Strength']); bump.inputs['Distance'].default_value=.00003; wire(figure.outputs[0],bump.inputs['Height']); wire(bump.outputs[0],bsdf.inputs['Normal'])
     output=node('ShaderNodeOutputMaterial','Surface output'); wire(bsdf.outputs[0],output.inputs[0])
     # Legible editable nodes grouped by position; controls in a column.
@@ -119,6 +120,15 @@ def hardware(name,location,size,mat):
     bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
     o.data.materials.append(mat); mod=o.modifiers.new('Hardware rounded corners','BEVEL'); mod.width=.002; mod.segments=3
     o.hide_render=not CFG['hardware_visible']; return o
+
+def configure_render_defaults():
+    scene=bpy.context.scene; scene.render.engine='CYCLES'; scene.cycles.samples=CFG['samples']; scene.cycles.use_denoising=True; scene.cycles.seed=17
+    if scene.world is None:scene.world=bpy.data.worlds.new('World')
+    scene.world.use_nodes=True; scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.12,.12,.12,1); scene.world.node_tree.nodes['Background'].inputs[1].default_value=.25
+    scene.view_settings.view_transform='AgX'; scene.view_settings.look='AgX - Medium High Contrast'; scene.view_settings.exposure=0; scene.view_settings.gamma=1
+    scene.render.film_transparent=False; scene.render.image_settings.file_format='PNG'; scene.render.resolution_percentage=100; scene.render.resolution_x=scene.render.resolution_y=CFG['comparison_resolution']
+    scene.render.image_settings.color_mode='RGBA'; scene.render.image_settings.color_depth='8'
+    scene['project_root']=str(ROOT)
 
 def build():
     bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
@@ -175,15 +185,10 @@ def build():
         if name=='Front': cam.data.type='ORTHO'; cam.data.ortho_scale=.54
     for name,loc,power,size in [('Softbox key',(-.38,.28,.75),15,.55),('Subtle fill',(.4,-.15,.65),5,.5),('Edge softbox',(.08,.42,.4),7,.35)]:
         bpy.ops.object.light_add(type='AREA',location=loc); o=bpy.context.object; o.name=name; o.data.energy=power; o.data.shape='RECTANGLE'; o.data.size=size; o.data.size_y=size*.55; look(o,(0,0,0))
-    scene=bpy.context.scene; scene.camera=bpy.data.objects['Front']; scene.render.engine='CYCLES'; scene.cycles.samples=CFG['samples']; scene.cycles.use_denoising=True; scene.cycles.seed=17
-    scene.world.use_nodes=True; scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.12,.12,.12,1); scene.world.node_tree.nodes['Background'].inputs[1].default_value=.25
-    scene.view_settings.view_transform='AgX'; scene.view_settings.look='AgX - Medium High Contrast'; scene.view_settings.exposure=0; scene.view_settings.gamma=1
-    scene.render.film_transparent=False; scene.render.image_settings.file_format='PNG'; scene.render.resolution_percentage=100; scene.render.resolution_x=scene.render.resolution_y=CFG['comparison_resolution']
-    scene.render.image_settings.color_mode='RGBA'; scene.render.image_settings.color_depth='8'
-    scene['project_root']=str(ROOT); scene['geometry_generated_once']=True
+    scene=bpy.context.scene;scene.camera=bpy.data.objects['Front'];configure_render_defaults();scene['geometry_generated_once']=True
     bpy.ops.object.select_all(action='DESELECT'); body.select_set(True); bpy.context.view_layer.objects.active=body
     bpy.ops.wm.obj_export(filepath=str(ROOT/'geometry/body_mesh.obj'),export_selected_objects=True,export_materials=False)
-    set_finish('prs_reference',MANIFEST[4])
+    set_finish('prs_reference' if 'prs_reference' in PRESETS else next(iter(PRESETS)),MANIFEST[min(4,len(MANIFEST)-1)])
     # Pack source images for a portable, editable saved scene.
     for screen in bpy.data.screens:
         for area in screen.areas:

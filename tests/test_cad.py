@@ -32,3 +32,10 @@ class CadTests(unittest.TestCase):
             path.write_text('<svg xmlns="http://www.w3.org/2000/svg"><polygon id="BODY" points="-1,0 1,0 1,-3 -1,-3"/></svg>')
             points=read_outline(path, units='in')
             self.assertEqual(points,[(-25.4,0),(25.4,0),(25.4,76.19999999999999),(-25.4,76.19999999999999)])
+
+    def test_named_cad_points_preserve_hardware_locations_in_mm(self):
+        from guitar_finish_simulator.cad import read_anchors
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'anchors.dxf'
+            path.write_text('0\nSECTION\n2\nENTITIES\n0\nPOINT\n8\nBRIDGE\n10\n0\n20\n-72\n0\nPOINT\n8\nVOLUME\n10\n70\n20\n-90\n0\nENDSEC\n0\nEOF\n')
+            self.assertEqual(read_anchors(path,units='mm'),{'BRIDGE':[0,-72],'VOLUME':[70,-90]})

@@ -127,7 +127,7 @@ def prepare_wood(root: Path, input_dir: Path):
             figure=.65*luminance+.35*np.clip(.5+(luminance-low)*2,0,1)
             lo,hi=np.percentile(figure,[2,98]); figure=np.clip((figure-lo)/max(hi-lo,.01),0,1)
         save(root/'assets/textures/processed'/f'{stem}.figure.png',np.uint8(figure*255))
-        assumed_width=project['texture_width_mm']
+        assumed_width=spec.get('width_mm',project['texture_width_mm'])
         entry={'source_filename':name,'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
             **spec,'figure_calibration':calibration if spec.get('figure_filter')=='horizontal_flame' else [],'alignment':alignment,'homographies':transforms,'bookmatched_pixels':[raw.shape[1],raw.shape[0]],
             'seam_u':.5,'assumed_width_mm':assumed_width,

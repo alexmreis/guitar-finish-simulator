@@ -81,3 +81,31 @@ def validate_contour(points):
     area=sum(a[0]*b[1]-b[0]*a[1] for a,b in edges)/2
     if abs(area)<1e-6:
         raise SpecificationError('Contour has zero area')
+
+
+def read_anchors(path, *, units='mm', origin_mm=(0,0)):
+    """Read named DXF POINT layers for bridge, pickups, controls and selector."""
+    path=Path(path)
+    if units not in {'mm','cm','m','in'}:
+        raise SpecificationError('CAD units must be explicit')
+    scale={'mm':1,'cm':10,'m':1000,'in':25.4}[units]
+    lines=path.read_text().splitlines()
+    pairs=[(int(lines[i].strip()),lines[i+1].strip()) for i in range(0,len(lines),2)]
+    result={};current=[]
+    def add(entity):
+        if entity and entity[0]==(0,'POINT'):
+            values=dict(entity);name=values[8]
+            if name in result:
+                raise SpecificationError(f'Duplicate CAD anchor: {name}')
+            point=[float(values[10])*scale-origin_mm[0],float(values[20])*scale-origin_mm[1]]
+            if not all(math.isfinite(v) for v in point):
+                raise SpecificationError('CAD anchors must be finite')
+            result[name]=point
+    for code,value in pairs:
+        if code==0:
+            add(current);current=[]
+        current.append((code,value))
+    add(current)
+    if not result:
+        raise SpecificationError('Anchor export must contain named DXF POINT entities')
+    return result

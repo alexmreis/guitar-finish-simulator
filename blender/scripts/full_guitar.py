@@ -8,9 +8,11 @@ from bpy_extras.object_utils import world_to_camera_view
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from scene import ROOT,CFG,OUTLINE,MANIFEST,PRESETS,color,set_finish,look
 F=json.loads((ROOT/'config/full_guitar.json').read_text())
+from hardware_layout import layout
+LAYOUT=layout(F)
 with np.load(ROOT/'geometry/full_guitar/carve-field.npz') as packed_field:
     FIELD={key:packed_field[key] for key in packed_field.files}
-SCALE=F['scale_length_mm']/1000;SADDLE_Y=-.072;NUT_Y=SADDLE_Y+SCALE
+SCALE=F['scale_length_mm']/1000;SADDLE_Y=F.get('bridge_saddle_y_mm',-72)/1000;NUT_Y=SADDLE_Y+SCALE
 LAST_DISTANCE=SCALE*(1-2**(-F['fret_count']/12));BOARD_END=NUT_Y-LAST_DISTANCE-.008
 RADIUS=F['fretboard_radius_mm']/1000;BOARD_TOP=.028
 HEAD_ROOT=None;HEAD_MAT=None
@@ -125,8 +127,8 @@ def build_body():
     for p in body.data.polygons:p.material_index=0 if p.center.z>0 and p.normal.z>.4 else 1
     print('Carved shell constructed; rounding perimeter',flush=True)
     bevel(body,F['edge_round_mm']/1000,5,True)
-    for label,y in [('Neck',.075),('Bridge',-.025)]:cut(body,(0,y,.016),(.071,.040,.020),label+' pickup route')
-    cut(body,(0,.026,.017),(.075,.019,.016),'Single-width pickup route')
+    for label,y in [('Neck',LAYOUT['neck_pickup_y_mm']/1000),('Bridge',LAYOUT['bridge_pickup_y_mm']/1000)]:cut(body,(0,y,.016),(.071,.040,.020),label+' pickup route')
+    cut(body,(0,LAYOUT['single_pickup_y_mm']/1000,.017),(.075,.019,.016),'Single-width pickup route')
     cut(body,(0,SADDLE_Y-.007,.020),(.088,.044,.009),'Recessed 510 tremolo')
     bm=bmesh.new();bm.from_mesh(body.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.0000007);bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=.0000001);boundary=[e for e in bm.edges if e.is_boundary]
     if boundary:bmesh.ops.holes_fill(bm,edges=boundary,sides=0)
@@ -223,6 +225,8 @@ def build_neck():
 
 def sync_headstock():
     body=BODY_MAT.node_tree.nodes;head=HEAD_MAT.node_tree.nodes
+    for key in ['candidate','preset','bookmatch']:
+        HEAD_MAT[key]=BODY_MAT[key]
     head['Gloss clearcoat'].inputs['Specular IOR Level'].default_value=body['Gloss clearcoat'].inputs['Specular IOR Level'].default_value
     for n in body:
         if n.type=='VALUE' and n.name in head:head[n.name].outputs[0].default_value=n.outputs[0].default_value
@@ -287,25 +291,25 @@ def lathe(name,profile,mat,parent=None,segments=64,knurl=False):
     return mesh_object(name,verts,faces,mat,True,parent)
 
 def build_hardware():
-    for label,y in [('Neck',.075),('Bridge',-.025)]:
+    for label,y in [('Neck',LAYOUT['neck_pickup_y_mm']/1000),('Bridge',LAYOUT['bridge_pickup_y_mm']/1000)]:
         cube('Fishman '+label+' brushed black nickel cover',(0,y,.023),(.070,.038,.011),BRUSHED_NICKEL,.003)
         for x in [-.039,.039]:cube(label+' direct-mount tab',(x,y,.018),(.010,.012,.003),BLACK_METAL,.001);screw(label+' height screw',(x,y,.020),BLACK_METAL,r=.0013)
-    cube('Fishman single-width black cover',(0,.026,.0245),(.069,.016,.008),BLACK_PLASTIC,.0035)
-    for x in [-.0355,.0355]:screw('Single-width direct mounting',(x,.026,.0255),BLACK_METAL,r=.0014)
+    cube('Fishman single-width black cover',(0,LAYOUT['single_pickup_y_mm']/1000,.0245),(.069,.016,.008),BLACK_PLASTIC,.0035)
+    for x in [-.0355,.0355]:screw('Single-width direct mounting',(x,LAYOUT['single_pickup_y_mm']/1000,.0255),BLACK_METAL,r=.0014)
     # 510 dimensions: 83.5 x 40 plate, 54 mm spread, 56 mm pivot posts.
-    cube('Gotoh 510TS-FE1 black baseplate',(0,SADDLE_Y-.007,.0218),(.0835,.040,.0026),BLACK_METAL,.001)
+    cube('Gotoh 510TS-FE1 black baseplate',(0,SADDLE_Y-.007,.0218),(F['bridge_plate_width_mm']/1000,F['bridge_plate_depth_mm']/1000,.0026),BLACK_METAL,.001)
     cube('Gotoh tremolo block',(0,SADDLE_Y-.012,0),(.064,.012,.042),BLACK_METAL,.0007)
-    for x in [-.028,.028]:cylinder('510 pivot stud / 10 mm',(x,SADDLE_Y+.010,.0235),.005,.004,BLACK_METAL);screw('Pivot hex socket',(x,SADDLE_Y+.010,.0258),BLACK_PLASTIC,r=.002)
-    for i,x in enumerate(np.linspace(-.027,.027,6)):
+    for x in [-F['bridge_pivot_pitch_mm']/2000,F['bridge_pivot_pitch_mm']/2000]:cylinder('510 pivot stud / 10 mm',(x,SADDLE_Y+.010,.0235),F['bridge_stud_diameter_mm']/2000,.004,BLACK_METAL);screw('Pivot hex socket',(x,SADDLE_Y+.010,.0258),BLACK_PLASTIC,r=.002)
+    for i,x in enumerate(np.linspace(-F['bridge_string_spread_mm']/2000,F['bridge_string_spread_mm']/2000,6)):
         z=.02758-(RADIUS-math.sqrt(RADIUS*RADIUS-x*x));cube(f'510 saddle {i+1}',(float(x),SADDLE_Y-.002,z),(.0088,.017,.010),BLACK_METAL,.0007)
         for dx in [-.0024,.0024]:screw('Saddle height grub screw',(float(x)+dx,SADDLE_Y+.001,z+.0053),STAINLESS,r=.00065)
         cylinder('Saddle intonation screw',(float(x),SADDLE_Y-.019,z-.0008),.0013,.011,BLACK_METAL,axis=(0,1,0),vertices=24)
     arm=[(.034,SADDLE_Y-.007,.026),(.040,SADDLE_Y+.006,.036),(.059,SADDLE_Y+.055,.043),(.066,SADDLE_Y+.115,.042)];line('Gotoh black tremolo arm / 6 mm',arm,F['bridge_arm_diameter_mm']/2000,BLACK_METAL,resolution=5)
-    for x,y,label in [(.076,-.073,'Volume push-pull'),(.109,-.127,'Tone push-pull')]:
+    for x,y,label in [(*[v/1000 for v in LAYOUT['volume_mm']],'Volume push-pull'),(*[v/1000 for v in LAYOUT['tone_mm']],'Tone push-pull')]:
         z=sample_field(x,y);normal=Vector((-sample_field(x,y,'dx'),-sample_field(x,y,'dy'),1)).normalized();root=bpy.data.objects.new(label+' control',None);bpy.context.collection.objects.link(root);root.location=(x,y,z);root.rotation_mode='QUATERNION';root.rotation_quaternion=Vector((0,0,1)).rotation_difference(normal)
         cylinder(label+' mounting washer',(0,0,.0008),.011,.001,BLACK_METAL,root)
         lathe(label+' black dome speed knob',[(.0095,0),(.0095,.002),(.0093,.010),(.0085,.013),(.006,.015),(.002,.016),(.0003,.0162)],BLACK_METAL,root,knurl=True)
-    x=.107;y=-.031;z=sample_field(x,y)
+    x,y=[v/1000 for v in LAYOUT['selector_mm']];z=sample_field(x,y)
     cube('Freeway HSH selector mounting plate',(x,y,z+.001),(.014,.043,.0018),BLACK_PLASTIC,.005)
     line('Freeway selector slot',[(x,y-.015,z+.0023),(x,y+.015,z+.0023)],.0012,INLAY)
     line('Freeway selector lever',[(x,y-.004,z+.002),(x+.005,y-.008,z+.019)],.0012,BLACK_METAL)
@@ -334,7 +338,7 @@ def build_rear():
 def build_strings(posts):
     gauges=[.046,.036,.026,.016,.011,.009]
     ordered=posts[:4]+[posts[5],posts[4]]
-    for i,(xb,xn,gauge,post) in enumerate(zip(np.linspace(-.027,.027,6),np.linspace(-.01725,.01725,6),gauges,ordered)):
+    for i,(xb,xn,gauge,post) in enumerate(zip(np.linspace(-F['bridge_string_spread_mm']/2000,F['bridge_string_spread_mm']/2000,6),np.linspace(-.01725,.01725,6),gauges,ordered)):
         r=gauge*.0254/2;zn=board_z(float(xn))+.00118+r+.00020;zb=board_z(float(xb))+.00118+r+.00340;side,px,py=post;end=HEAD_ROOT.matrix_world@Vector((px,py,.015))
         line(f'String {i+1} / {gauge:.3f} inch E standard',[(float(xb),SADDLE_Y,zb),(float(xn),NUT_Y,zn),tuple(end)],r,STAINLESS,resolution=3)
 
@@ -412,6 +416,7 @@ def build_full():
     for screen in bpy.data.screens:
         for area in screen.areas:
             if area.type=='VIEW_3D':area.spaces.active.region_3d.view_perspective='CAMERA';area.spaces.active.region_3d.view_distance=1.4
+    bpy.context.scene['geometry_generated_once']=True
     bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'blender/full_guitar.blend'))
     report.update(blender_version=bpy.app.version_string,engine=bpy.context.scene.render.engine,scale_length_mm=F['scale_length_mm'],frets=len(frets),nut_width_mm=F['nut_width_mm'],last_fret_width_mm=F['last_fret_width_mm'],fretboard_radius_mm=F['fretboard_radius_mm'],tuners_left=sum(p[0]<0 for p in posts),tuners_right=sum(p[0]>0 for p in posts),string_count=6,bridge_width_mm=F['bridge_plate_width_mm'],bridge_string_spread_mm=F['bridge_string_spread_mm'],samples=F['samples'],assumptions=F['assumptions'],geometry_signature=full_signature())
     (ROOT/'geometry/full_guitar/model-validation.json').write_text(json.dumps(report,indent=2));print('FULL GUITAR VALIDATED',report)

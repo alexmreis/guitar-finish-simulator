@@ -47,3 +47,20 @@ def prepare_cad_body(root, points):
     (root/'geometry/body_outline.svg').write_text(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{points[:,0].min()} {-height} {width} {height}"><polygon id="BODY" points="{svgpoints}" fill="none" stroke="black" stroke-width="0.5"/></svg>')
     write_perimeter_fields(root,points,cfg)
     (root/'geometry/outline-validation.json').write_text(json.dumps({'closed':True,'self_intersections':0,'width_mm':width,'height_mm':height,'source_kind':'cad'},indent=2))
+
+
+def validate_texture_coverage(root):
+    """Reject placements that would force Blender to extend pixels beyond a real blank."""
+    from .project import SpecificationError
+    outline=json.loads((root/'geometry/outline.json').read_text())
+    points=np.array(outline['points_mm']);points[:,1]-=outline['height_mm']/2
+    surface=json.loads((root/'config/project.json').read_text())
+    manifest=json.loads((root/'assets/textures/processed/manifest.json').read_text())
+    for candidate in manifest:
+        pose=surface.get('placements',{}).get(candidate['source_filename'],{})
+        angle=np.deg2rad(pose.get('rotation_deg',0));c,s=np.cos(angle),np.sin(angle)
+        rotated=points@np.array([[c,s],[-s,c]])
+        rotated+=np.array([pose.get('x_mm',0),pose.get('y_mm',0)])
+        bounds=np.array([candidate['assumed_width_mm'],candidate['assumed_height_mm']])/2
+        if np.any(np.abs(rotated)>bounds+1e-6):
+            raise SpecificationError(f"{candidate['source_filename']}: texture placement samples outside the photographed blank; change placement or physical scale")

@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "name": "Compact 24-fret validation instrument",
+  "inputs": {
+    "photos": "../../assets/originals",
+    "candidates": {
+      "20261009_113155.jpg": {
+        "status": "physical",
+        "rotation": 0,
+        "quads": [
+          [
+            [
+              23,
+              33
+            ],
+            [
+              290,
+              29
+            ],
+            [
+              290,
+              698
+            ],
+            [
+              27,
+              697
+            ]
+          ],
+          [
+            [
+              303,
+              29
+            ],
+            [
+              570,
+              19
+            ],
+            [
+              570,
+              705
+            ],
+            [
+              304,
+              698
+            ]
+          ]
+        ],
+        "figure_type": "quilt",
+        "alignment_max_shift_fraction": 0.045
+      }
+    },
+    "finish_reference": "../../assets/references/prs.png"
+  },
+  "config": {
+    "surface": {
+      "body_width_mm": 304,
+      "body_thickness_mm": 44,
+      "texture_width_mm": 400,
+      "texture_height_mm": 660,
+      "outline_reference_size": [
+        1376,
+        1790
+      ],
+      "outline_roi": [
+        20,
+        880,
+        660,
+        1750
+      ],
+      "neck_exclusion": [
+        280,
+        880,
+        397,
+        1045
+      ],
+      "outline_samples": 320,
+      "spline_smoothing": 12,
+      "samples": 32,
+      "comparison_resolution": 800,
+      "enlarged_resolution": 1600,
+      "hardware_visible": false,
+      "placements": {
+        "20261009_112804.jpg": {
+          "rotation_deg": 180
+        }
+      },
+      "minimum_burst_halfwidth_mm": 100
+    },
+    "instrument": {
+      "scale_length_mm": 635,
+      "nut_width_mm": 43,
+      "last_fret_width_mm": 57,
+      "fret_count": 24,
+      "fret_width_mm": 2.8,
+      "fretboard_radius_mm": 241.3,
+      "neck_thickness_first_mm": 20.5,
+      "neck_thickness_twelfth_mm": 21.5,
+      "body_center_thickness_mm": 42,
+      "body_rim_thickness_mm": 14,
+      "edge_round_mm": 2,
+      "maple_top_mm": 12,
+      "carve_transition_mm": 72,
+      "headstock_angle_deg": 12,
+      "headstock_thickness_mm": 15,
+      "walnut_stripe_mm": 2.5,
+      "bridge_plate_width_mm": 82.5,
+      "bridge_plate_depth_mm": 40,
+      "bridge_string_spread_mm": 54,
+      "bridge_pivot_pitch_mm": 56,
+      "bridge_stud_diameter_mm": 10,
+      "bridge_arm_diameter_mm": 6,
+      "tuner_post_diameter_mm": 6,
+      "tuner_button_width_mm": 17.6,
+      "tuner_button_height_mm": 12,
+      "tuner_button_depth_mm": 8,
+      "tuner_housing_diameter_mm": 18,
+      "default_candidate": "20261009_113155.jpg",
+      "default_preset": "prs_reference",
+      "samples": 64,
+      "front_resolution": [
+        1100,
+        2600
+      ],
+      "perspective_resolution": [
+        1800,
+        2200
+      ],
+      "assumptions": [
+        "Regression fixture: body outline is a 95% scale of Umbraeternal CAD, not a construction drawing.",
+        "42 mm center / 14 mm rim; 635 mm scale and 24 frets are test dimensions.",
+        "Existing six-string HSH/510-style/4L2R hardware family is reused; undimensioned exterior details remain approximations."
+      ],
+      "tuner_overall_height_mm": 39,
+      "tuner_housing_envelope_mm": 22.9,
+      "tuner_housing_height_mm": 15.5,
+      "tuner_mount_hole_mm": 10,
+      "tuner_screw_offset_mm": 7.8,
+      "tuner_screw_hole_mm": 2.4,
+      "studio_lights": [
+        {
+          "name": "Full key",
+          "location": [
+            -0.55,
+            0.3,
+            1.0
+          ],
+          "energy": 6,
+          "width": 0.22,
+          "height": 1.2,
+          "specular_factor": 1,
+          "visible_glossy": true
+        },
+        {
+          "name": "Full fill",
+          "location": [
+            0.65,
+            0.2,
+            1.1
+          ],
+          "energy": 3,
+          "width": 0.3,
+          "height": 1.1,
+          "specular_factor": 1,
+          "visible_glossy": true
+        },
+        {
+          "name": "Headstock rim",
+          "location": [
+            -0.5,
+            1.0,
+            0.5
+          ],
+          "energy": 3,
+          "width": 0.25,
+          "height": 0.6,
+          "specular_factor": 1,
+          "visible_glossy": true
+        },
+        {
+          "name": "Rear key",
+          "location": [
+            -0.55,
+            0.35,
+            -1.05
+          ],
+          "energy": 8,
+          "width": 0.22,
+          "height": 1.2,
+          "specular_factor": 1,
+          "visible_glossy": true
+        },
+        {
+          "name": "Rear fill",
+          "location": [
+            0.6,
+            0.1,
+            -1.15
+          ],
+          "energy": 3,
+          "width": 0.28,
+          "height": 1.1,
+          "specular_factor": 1,
+          "visible_glossy": true
+        }
+      ],
+      "studio_world_strength": 0.25
+    },
+    "finishes": "../../config/finishes.json"
+  },
+  "geometry": {
+    "body": {
+      "path": "body.svg",
+      "units": "mm"
+    },
+    "headstock": {
+      "path": "../umbraeternal/headstock.svg",
+      "units": "mm"
+    }
+  }
+}

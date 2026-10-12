@@ -1,0 +1,105 @@
+"""Loopback-only calibration editor; project files are the source of truth."""
+from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
+import json
+import mimetypes
+import threading
+from urllib.parse import urlparse,parse_qs,unquote
+from .pipeline import Pipeline
+from .project import Project
+from pathlib import Path
+from .calibration import CalibrationSession
+from .project import SpecificationError
+
+def make_server(specification,workspace,port=8765,blender=None):
+    root=Path(workspace).resolve()
+    session=CalibrationSession(specification,root/'.calibration')
+    state={'status':'idle'}
+    lock=threading.RLock()
+
+    def preview(payload):
+        try:
+            pipeline=Pipeline(session.path,root,blender)
+            pipeline.render(payload['preset'],[payload['candidate']],payload['view'],True)
+            image=root/'renders/full_guitar/previews'/payload['preset']/f"{payload['candidate']}.{payload['view']}.png"
+            with lock:
+                state.update(status='complete',image='/artifacts/'+str(image.relative_to(root)),**payload)
+        except Exception as error:
+            with lock:
+                state.update(status='failed',error=str(error))
+    class Handler(BaseHTTPRequestHandler):
+        def send(self,value,status=200):
+            payload=json.dumps(value).encode()
+            self.send_response(status);self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(payload)));self.end_headers();self.wfile.write(payload)
+
+        def file(self,path):
+            if not path.is_file():
+                return self.send({'error':'Artifact not yet available'},404)
+            payload=path.read_bytes()
+            self.send_response(200);self.send_header('Content-Type',mimetypes.guess_type(str(path))[0] or 'application/octet-stream');self.send_header('Content-Length',str(len(payload)));self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(payload)
+
+        def do_GET(self):
+            url=urlparse(self.path)
+            if url.path=='/api/project':
+                self.send(session.data())
+            elif url.path=='/api/controls':
+                from .finishes import BOUNDS
+                self.send(BOUNDS)
+            elif url.path=='/api/job':
+                with lock:
+                    self.send(dict(state))
+            elif url.path=='/api/source':
+                candidate=parse_qs(url.query).get('candidate',[''])[0]
+                project=Project.load(session.path)
+                if candidate not in project.candidates:
+                    return self.send({'error':'Unknown photograph'},404)
+                self.file(project.resolve(project.data['inputs']['photos'])/candidate)
+            elif url.path=='/api/reference':
+                project=Project.load(session.path)
+                self.file(project.resolve(project.data['inputs']['finish_reference']))
+            elif url.path=='/api/export':
+                self.send(session.data())
+            elif url.path.startswith('/artifacts/'):
+                path=(root/unquote(url.path[len('/artifacts/'):])).resolve()
+                if not path.is_relative_to(root) or path.suffix.lower() not in ['.png','.json','.svg']:
+                    return self.send({'error':'Unknown artifact'},404)
+                self.file(path)
+            elif url.path=='/':
+                self.file(Path(__file__).parent/'ui/index.html')
+            else:
+                self.send({'error':'Unknown endpoint'},404)
+
+        def do_POST(self):
+            try:
+                with lock:
+                    if state['status']=='running':
+                        return self.send({'error':'Wait for the current preview to finish before changing its inputs'},409)
+                    data=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
+                    if self.path=='/api/finish':
+                        self.send(session.update_finish(data['preset'],data['controls']))
+                    elif self.path=='/api/wood':
+                        self.send(session.update_wood(data['candidate'],data['controls']))
+                    elif self.path=='/api/placement':
+                        self.send(session.update_placement(data['candidate'],data['controls']))
+                    elif self.path=='/api/spec':
+                        session.save(data);self.send(session.data())
+                    elif self.path=='/api/sample':
+                        from .calibration import sample_reference
+                        project=Project.load(session.path)
+                        self.send(sample_reference(project.resolve(project.data['inputs']['finish_reference']),data['regions']))
+                    elif self.path=='/api/preview':
+                        project=Project.load(session.path)
+                        if data.get('candidate') not in project.candidates or data.get('preset') not in project.configs['finishes'] or data.get('view') not in ['front','perspective','rear','carve']:
+                            raise SpecificationError('Select a known photograph, finish and camera')
+                        state.clear();state.update(status='running')
+                        threading.Thread(target=preview,args=(data,),daemon=True).start()
+                        self.send(dict(state),202)
+                    else:
+                        self.send({'error':'Unknown endpoint'},404)
+            except (SpecificationError,ValueError,KeyError,TypeError) as error:
+                self.send({'error':str(error)},400)
+
+        def log_message(self,*args):
+            pass
+    server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    server.session=session
+    return server

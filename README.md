@@ -154,3 +154,82 @@ Apply lighting and save the selected material without rebuilding geometry:
 ```
 
 Regenerate images with `render_full_guitar.py`, then refresh sheets with `full_guitar_comparisons.py`. Lighting visibility/linking settings are included in the common scene signature.
+
+## Specification-driven workbench
+
+The reusable workflow runs entirely locally, with no LLM, image generation, remote inference or stock textures. It accepts a versioned JSON specification, 2D CAD contours, real wood photographs and a finish-reference photograph. Human calibration supplies crop corners, bookmatch classification and finish choices that a single photograph cannot determine uniquely.
+
+Run from this checkout using the existing Python environment and Blender 5.2.2 LTS. `--blender /path/to/blender` or the `BLENDER` environment variable selects another installation; an executable on PATH is discovered automatically. The tested host Python is 3.14. Dependencies remain the four packages in `requirements.txt`.
+
+```sh
+.venv/bin/python simulate.py validate projects/umbraeternal/project.json --workspace .work/umbraeternal
+.venv/bin/python simulate.py prepare projects/umbraeternal/project.json --workspace .work/umbraeternal
+.venv/bin/python simulate.py build projects/umbraeternal/project.json --workspace .work/umbraeternal
+.venv/bin/python simulate.py render projects/umbraeternal/project.json --workspace .work/umbraeternal --preset prs_reference --candidate 20261009_112804.jpg --view carve --preview
+.venv/bin/python simulate.py batch projects/umbraeternal/project.json --workspace .work/umbraeternal
+.venv/bin/python simulate.py serve projects/umbraeternal/project.json --workspace .work/workbench --port 8765
+```
+
+Open `http://127.0.0.1:8765`. The editor supports draggable crop corners (and a numeric JSON alternative), automatic/manual seam alignment, board-edge orientation for simulated pairs, physical texture scale, placement rotation/translation, selected reference-color regions, stain/burst/surface controls, specification editing and actual Blender previews. It saves a separate calibration draft at `.calibration/project.json` inside the chosen workspace. Reusing that workspace resumes the draft; use a new workspace for a different project. A running preview holds its inputs fixed until completion. Source photographs and the original project specification remain intact.
+
+To batch a saved calibration, supply its draft as the specification:
+
+```sh
+.venv/bin/python simulate.py batch .work/workbench/.calibration/project.json --workspace .work/calibrated-delivery
+```
+
+The ordinary `build` creates a shader-only `blender/material_template.blend`, then constructs the final instrument once. Finishes reuse that instrument. Hashes verify cached artifacts, so a corrupt scene is rebuilt; finish/placement-only edits reuse geometry. Explicit `render` commands also save `blender/last_render.blend` with the selected photograph, body/headstock finish and active camera. The cached `blender/full_guitar.blend` retains the project's default configuration. Existing body-only and full-guitar legacy scripts remain available.
+
+The complete batch produces all candidate × finish front comparisons, four default-instrument views for PRS/extreme-black, and an enlarged PRS carve view for every candidate. The default candidate's PRS carve view serves both purposes. `--no-hero` omits the default-instrument views while retaining comparisons and enlarged PRS views. Delivery checks inspect image dimensions, scene signatures, common comparison settings, source/texture hashes and current finish controls before making contact sheets.
+
+### Project specification
+
+`projects/umbraeternal/project.json` reproduces the approved instrument. `projects/compact/project.json` is a second regression fixture: a 304 mm body derived from a 95% scale of the supplied CAD, 635 mm scale, 24 frets, 42/14 mm carve and one physical quilt candidate. It demonstrates reuse without claiming a separately engineered instrument design.
+
+Paths resolve beside the specification, not the shell's working directory. `config.surface`, `config.instrument`, `config.finishes` and `inputs.candidates` accept either a JSON-file path or an inline object. Start by copying an example and changing its paths and dimensions. Specifications must declare `version: 1`.
+
+| Input | Contract |
+|---|---|
+| `inputs.photos` | Directory containing the unchanged source filenames. One photograph per candidate. |
+| `inputs.candidates` | Crop specifications keyed by source filename. `physical` requires two surveyed halves in the same photograph; `simulated` requires one board. |
+| `inputs.finish_reference` | Actual finish-reference photograph; used for human-selected palette samples. |
+| `inputs.design_reference` | Required only for the legacy headstock-image fallback. New designs should supply headstock CAD. |
+| `geometry.body` | `path`, explicit `units`, optional `layer` and `origin_mm`. Body x=0 is the string centerline; Cartesian +y points toward the neck. |
+| `geometry.headstock` | Optional CAD contour, x=0 on its centerline and y=0 at the nut, +y toward the tip. |
+| `geometry.anchors` | Optional named DXF POINT layers for bridge, pickups and controls, with explicit units and coordinate frame. |
+| `config.surface` | Body width, texture domain, burst-distance settings and per-candidate placements. |
+| `config.instrument` | Scale, fret/neck/body dimensions, carve/rounding, bridge dimensions, studio lights, render settings and assumptions. |
+| `config.finishes` | Independent stain, burst and surface parameters; the four supplied preset identifiers support the standard batch. |
+
+CAD import supports closed, straight-segment ASCII DXF `LWPOLYLINE` contours and SVG `polygon` elements. Use named `BODY` and `HEADSTOCK` layers/ids, or declare another name. Export curves as a sufficiently dense polyline; curved DXF bulges, SVG paths/transforms, holes and general 3D CAD are rejected or outside this version's contour contract. Units are `mm`, `cm`, `m` or `in`; SVG y is converted from screen coordinates to Cartesian coordinates. Body width must agree with the specification rather than being silently stretched.
+
+Optional hardware anchors use DXF `POINT` entities on layers `BRIDGE`, `NECK_PICKUP`, `BRIDGE_PICKUP`, `SINGLE_PICKUP`, `VOLUME`, `TONE` and `SELECTOR`. Bridge/pickups must lie on x=0. Anchor `frame: "cad"` (default) uses the body drawing's coordinates and recenters y with the body; `frame: "body_center"` uses already-centered model coordinates. `origin_mm` is subtracted after unit conversion. Controls accept x/y; bridge and pickup anchors supply y. Effective locations are saved in `geometry/hardware-anchors.json` and `config/full_guitar.json`.
+
+This version uses the existing six-string HSH, 510-style bridge and 4L/2R tuner geometry family. It supports different body/headstock contours, scale, fret count, neck/body dimensions and the tested bridge/anchor controls. Routing, set-neck heel and undimensioned hardware details remain visual approximations. New hardware families need additional geometry adapters and measurements. The legacy image fallback assumes the original Umbraeternal illustration layout. The surveyed final tuner silhouette overrides earlier provisional button dimensions retained in the legacy configuration.
+
+### Wood and finish calibration
+
+Crop corners are `[top-left, top-right, bottom-right, bottom-left]` in original photo pixels. Physical pairs list left and right halves in that order. Quarter-turn crop rotation aligns the board; `seam_edge` chooses the mirrored edge for a single board. `alignment_shift_px` overrides automatic vertical registration within the conservative overlap limit; leaving it absent restores automatic alignment. Both physical halves remain in the result.
+
+Candidate `width_mm` overrides the assumed width of the finished, usable bookmatch crop. Its height is inferred from rectified pixel aspect. This changes physical sampling scale without resampling grain; it is not independent verification of cutting feasibility. Positions use `x_mm`, `y_mm` and `rotation_deg` in `surface.placements`: the body coordinates are rotated about the seam center, then translated within the photo. Placements outside the photographed blank are rejected instead of extending edge pixels into invented coverage.
+
+Reference samples suggest four palette colors using median pixels inside selected regions. Reflections, unknown exposure and image processing remain in those samples; they do not recover dye absorption or clearcoat properties. Human preview adjustment is required. Stain/burst controls never change the studio rig, and surface controls do not repaint the grain. Single-photograph chatoyance and unfinished-versus-finished wood remain the optical limitations described above.
+
+Optional instrument render-profile overrides are `preview_front_resolution`, `preview_perspective_resolution`, `preview_carve_resolution`, `preview_samples`, `comparison_front_resolution`, `comparison_samples` and `carve_resolution`. Existing `front_resolution`, `perspective_resolution` and `samples` control full-size views. All comparison panels share one profile; enlarged PRS delivery requires at least 1600 × 1600.
+
+### Artifacts, verification and refactoring evidence
+
+Each workspace contains copied source/CAD inputs, editable configuration, corrected/bookmatched textures and provenance, physical perimeter/carve fields, OBJ geometry, packed Blender projects, image-level render records, stage logs/execution receipts, contact sheets and validation reports. `project.lock.json` records resolved inputs/configuration and source hashes; `project.snapshot.json` points to copied local inputs so the workspace can recreate another project without original absolute paths.
+
+The reusable package is under `src/guitar_finish_simulator`: `project` defines inputs, `cad` imports contours/anchors, `wood` prepares photographs, `geometry` prepares physical fields/coverage, `finishes` validates material controls, `rendering` adapts Blender rendering, `pipeline` executes/caches stages, `calibration` persists human adjustments, `app` serves the local editor and `delivery` validates/makes comparisons. Blender construction remains in `blender/scripts` behind those interfaces.
+
+Run the fast public-boundary checks or the complete suite with real Blender execution:
+
+```sh
+.venv/bin/python verify.py
+.venv/bin/python verify.py --rendering
+```
+
+The complete suite builds/reopens the approved and compact instruments, exercises named CAD anchors, checks manifoldness and measured dimensions, compares flame/quilt renders to captured approved images, verifies exact wood texture/provenance reproduction, repairs corrupted cached scenes, tests material edits without geometry/studio changes, checks saved preview materials, runs the HTTP preview job and executes a complete compact finish batch. No Blender tests are silently skipped. `BLENDER=/path/to/blender` selects the test executable.
+
+`verify.py` writes `.work/verification/report.json` with executed counts, failures/skips, pipeline code hash, saved-model evidence and golden-image error metrics. Tests allow mean RGB error below 0.15/255 and 99th-percentile error below 2/255. Exact scene signatures enforce invariants within batches; tiny Blender primitive indexing/UV differences across fresh builds are checked through measured geometry and golden renders. `REFACTORING.md` records the red/green checkpoints and behavior-preserving extractions.
