@@ -1,9 +1,9 @@
 """Blender scene and adjustable photo-derived finish material."""
-import bpy, bmesh, json, math, hashlib, struct
+import bpy, bmesh, json, math, hashlib, struct, os
 from surface_normals import apply as apply_surface_normals
 from pathlib import Path
 from mathutils import Vector
-ROOT=Path(__file__).resolve().parents[2]
+ROOT=Path(os.environ.get('GFS_PROJECT_ROOT',Path(__file__).resolve().parents[2])).resolve()
 CFG=json.loads((ROOT/'config/project.json').read_text())
 OUTLINE=json.loads((ROOT/'geometry/outline.json').read_text())
 MANIFEST=json.loads((ROOT/'assets/textures/processed/manifest.json').read_text())

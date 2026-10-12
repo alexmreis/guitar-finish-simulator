@@ -1,11 +1,11 @@
 """Prepare reproducible body carve fields and the illustrated headstock outline."""
-import json
+import json, os
 from pathlib import Path
 import cv2
 import numpy as np
 from PIL import Image,ImageDraw
 from scipy.ndimage import distance_transform_edt,gaussian_filter,map_coordinates
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(os.environ.get('GFS_PROJECT_ROOT',Path(__file__).resolve().parent)).resolve()
 cfg=json.loads((ROOT/'config/full_guitar.json').read_text());outline=json.loads((ROOT/'geometry/outline.json').read_text())
 points=np.array(outline['points_mm']);points[:,1]-=outline['height_mm']/2
 step=.5;x0=-200;y0=-330;shape=(1321,801)

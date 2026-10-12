@@ -1,11 +1,13 @@
 """Extract front-body perimeter with explicitly editable neck/hardware exclusions."""
-import json
+import json, sys, os
 from pathlib import Path
 import cv2
 import numpy as np
 from PIL import Image
 from scipy.interpolate import splprep, splev
-ROOT=Path(__file__).resolve().parent
+sys.path.insert(0,str(Path(__file__).resolve().parent/'src'))
+from guitar_finish_simulator.geometry import write_perimeter_fields
+ROOT=Path(os.environ.get('GFS_PROJECT_ROOT',Path(__file__).resolve().parent)).resolve()
 cfg=json.loads((ROOT/'config/project.json').read_text())
 im=np.array(Image.open(ROOT/'assets/references/Umbraeternal.JPG').convert('RGB').resize(tuple(cfg['outline_reference_size'])))
 mask=np.uint8(np.min(im,axis=2)<190)*255
@@ -48,23 +50,6 @@ overlay=im.copy(); cv2.polylines(overlay,[contour.astype(np.int32)],True,(255,10
 cv2.line(overlay,(338,885),(338,1750),(80,150,255),1)
 Image.fromarray(overlay).save(ROOT/'geometry/silhouette-overlay.png')
 Image.fromarray(overlay[875:1760,10:670]).save(ROOT/'geometry/spline-comparison.png')
-# Distance to nearest actual outline edge, including concave cutaways. Unit: 160mm.
-size=1024; tw=cfg['texture_width_mm']; th=cfg['texture_height_mm']; cy=np.ptp(points[:,1])/2
-uv=np.column_stack([points[:,0]/tw+.5,(points[:,1]-cy)/th+.5])
-bodymask=np.zeros((size,size),np.uint8); pix=np.column_stack([uv[:,0]*(size-1),(1-uv[:,1])*(size-1)])
-cv2.fillPoly(bodymask,[np.int32(pix)],255)
-# Exact Euclidean distances using physically isotropic pixels in an intermediate grid.
-from scipy.ndimage import distance_transform_edt
-dist=distance_transform_edt(bodymask>0,sampling=(th/(size-1),tw/(size-1)))
-local_halfwidth=np.full_like(dist,cfg['minimum_burst_halfwidth_mm'])
-for row in range(size):
-    occupied=np.flatnonzero(bodymask[row]>0)
-    if len(occupied):
-        # Separate disjoint horn spans so cutaway gaps are not counted as wood.
-        splits=np.split(occupied,np.flatnonzero(np.diff(occupied)>1)+1)
-        for span in splits:
-            local_halfwidth[row,span]=max(cfg['minimum_burst_halfwidth_mm'],len(span)*tw/(size-1)/2)
-Image.fromarray(np.uint16(np.clip(dist/local_halfwidth,0,1)*65535)).save(ROOT/'geometry/perimeter-distance.png')
-Image.fromarray(bodymask).save(ROOT/'geometry/uv-layout.png')
+write_perimeter_fields(ROOT, points, cfg)
 (ROOT/'geometry/outline-validation.json').write_text(json.dumps({'closed':True,'self_intersections':0,'samples':n,'width_mm':float(np.ptp(points[:,0])),'height_mm':float(np.ptp(points[:,1])),'neck_interface':'manual neck exclusion, unseen interface provisional','strap_buttons_excluded':True},indent=2))
 print('Validated outline',n,'points;',np.ptp(points[:,1]),'mm tall')

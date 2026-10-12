@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "name": "Umbraeternal",
+  "inputs": {
+    "photos": "../../assets/originals",
+    "candidates": "../../config/candidates.json",
+    "design_reference": "../../assets/references/Umbraeternal.JPG",
+    "finish_reference": "../../assets/references/prs.png"
+  },
+  "config": {
+    "surface": "../../config/project.json",
+    "instrument": "../../config/full_guitar.json",
+    "finishes": "../../config/finishes.json"
+  },
+  "geometry": {
+    "body": {"path": "../../geometry/body_outline.dxf", "layer": "BODY", "units": "mm"}
+  }
+}
