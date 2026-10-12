@@ -52,7 +52,17 @@ def make_server(specification,workspace,port=8765,blender=None):
                 project=Project.load(session.path)
                 if candidate not in project.candidates:
                     return self.send({'error':'Unknown photograph'},404)
-                self.file(project.resolve(project.data['inputs']['photos'])/candidate)
+                source=project.resolve(project.data['inputs']['photos'])/candidate
+                if project.candidates[candidate].get('exif_orientation_applied'):
+                    import io
+                    from .photographs import open_photograph
+                    stream=io.BytesIO()
+                    with open_photograph(source,project.candidates[candidate]) as image:
+                        image.save(stream,format='PNG')
+                    payload=stream.getvalue()
+                    self.send_response(200);self.send_header('Content-Type','image/png');self.send_header('Content-Length',str(len(payload)));self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(payload)
+                else:
+                    self.file(source)
             elif url.path=='/api/reference':
                 project=Project.load(session.path)
                 self.file(project.resolve(project.data['inputs']['finish_reference']))
@@ -73,7 +83,15 @@ def make_server(specification,workspace,port=8765,blender=None):
                 with lock:
                     if state['status']=='running':
                         return self.send({'error':'Wait for the current preview to finish before changing its inputs'},409)
-                    data=json.loads(self.rfile.read(int(self.headers.get('Content-Length','0'))))
+                    url=urlparse(self.path)
+                    length=int(self.headers.get('Content-Length','0'))
+                    if url.path=='/api/upload':
+                        if not 0<length<=25*1024*1024:
+                            return self.send({'error':'Photograph must be between 1 byte and 25 MB'},413)
+                        query=parse_qs(url.query)
+                        result=session.upload_wood(query.get('filename',[''])[0],self.rfile.read(length),bookmatch=query.get('bookmatch',['simulated'])[0],figure_type=query.get('figure_type',['flame'])[0],rotation=query.get('rotation',[0])[0],width_mm=query.get('width_mm',[None])[0])
+                        return self.send(result,201)
+                    data=json.loads(self.rfile.read(length))
                     if self.path=='/api/finish':
                         self.send(session.update_finish(data['preset'],data['controls']))
                     elif self.path=='/api/wood':
@@ -90,6 +108,8 @@ def make_server(specification,workspace,port=8765,blender=None):
                         project=Project.load(session.path)
                         if data.get('candidate') not in project.candidates or data.get('preset') not in project.configs['finishes'] or data.get('view') not in ['front','perspective','rear','carve']:
                             raise SpecificationError('Select a known photograph, finish and camera')
+                        if project.candidates[data['candidate']].get('crop_review_required'):
+                            raise SpecificationError('Review the uploaded crop and orientation, then save wood settings before rendering')
                         state.clear();state.update(status='running')
                         threading.Thread(target=preview,args=(data,),daemon=True).start()
                         self.send(dict(state),202)

@@ -233,3 +233,13 @@ Run the fast public-boundary checks or the complete suite with real Blender exec
 The complete suite builds/reopens the approved and compact instruments, exercises named CAD anchors, checks manifoldness and measured dimensions, compares flame/quilt renders to captured approved images, verifies exact wood texture/provenance reproduction, repairs corrupted cached scenes, tests material edits without geometry/studio changes, checks saved preview materials, runs the HTTP preview job and executes a complete compact finish batch. No Blender tests are silently skipped. `BLENDER=/path/to/blender` selects the test executable.
 
 `verify.py` writes `.work/verification/report.json` with executed counts, failures/skips, pipeline code hash, saved-model evidence and golden-image error metrics. Tests allow mean RGB error below 0.15/255 and 99th-percentile error below 2/255. Exact scene signatures enforce invariants within batches; tiny Blender primitive indexing/UV differences across fresh builds are checked through measured geometry and golden renders. `REFACTORING.md` records the red/green checkpoints and behavior-preserving extractions.
+
+### Uploading another wood photograph
+
+In the workbench, choose **Add wood photo**, select an original JPEG, PNG or WebP file (up to 25 MB), and identify a single board or a photographed physical pair. Choose flame, quilt or other figuring and an initial quarter-turn rotation. Width is optional and remains an assumption unless measured separately.
+
+The upload keeps its original filename and bytes in the workspace's `.calibration/photos` directory. Existing project photos are copied there byte-for-byte when the first upload is added; repository assets and the source specification are not overwritten. Duplicate names are rejected. Phone EXIF orientation is applied consistently to the editor view and preprocessing, while the stored original stays intact.
+
+The new candidate is selected automatically on the Wood tab. Its full-photo rectangles are provisional: adjust the crop corners to exclude the background, check rotation and seam selection, then **Save wood settings**. Preview remains unavailable until that explicit review. Existing reviewed photos remain usable while an upload is pending; full preparation/batches require all uploaded crops to be reviewed. The same draft specification can be used with the ordinary CLI and portable snapshot workflow.
+
+New photos and crop edits reuse the instrument geometry and studio. Render records retain source/texture hashes and bookmatch classification. Preparation sheets expand beyond the original eight candidates.

@@ -6,6 +6,7 @@ import subprocess
 import shutil
 import time
 import sys
+from dataclasses import replace
 from .project import Project,SpecificationError
 from .cache import digest, fingerprint, reusable, record
 from .wood import prepare_wood
@@ -24,7 +25,13 @@ class Pipeline:
         command=[executable or sys.executable,str(CODE_ROOT/name),*arguments]
         subprocess.run(command,env={**os.environ,'GFS_PROJECT_ROOT':str(self.root)},check=True)
 
-    def prepare(self):
+    def prepare(self,skip_pending=False):
+        pending=[name for name,spec in self.project.candidates.items() if spec.get('crop_review_required')]
+        if pending and not skip_pending:
+            raise SpecificationError(', '.join(pending)+': review uploaded crop corners and save wood settings before preparation')
+        if pending:
+            ready={name:spec for name,spec in self.project.candidates.items() if not spec.get('crop_review_required')}
+            self.project=replace(self.project,candidates=ready)
         self.project.validate_inputs()
         self.project.materialize(self.root)
         prepare_wood(self.root,self.root/'assets/originals')
@@ -80,8 +87,8 @@ class Pipeline:
         if result.returncode:
             raise RuntimeError(f'Blender failed: {log}\n'+log.read_text()[-2500:])
 
-    def build(self):
-        self.prepare()
+    def build(self,skip_pending=False):
+        self.prepare(skip_pending=skip_pending)
         key=self.model_key()
         if reusable(self.root,'model',key):
             print('Reusing verified model',self.root/'blender/full_guitar.blend')
@@ -98,9 +105,8 @@ class Pipeline:
         instrument=json.loads((self.root/'config/full_guitar.json').read_text())
         code=[*list((CODE_ROOT/'blender/scripts').glob('*.py')),CODE_ROOT/'prepare_full_guitar.py',*list((CODE_ROOT/'src/guitar_finish_simulator').glob('*.py'))]
         geometry=[self.root/'geometry/outline.json',self.root/'geometry/full_guitar/headstock-outline.json',self.root/'geometry/full_guitar/carve-field.npz']
-        textures=list((self.root/'assets/textures').rglob('*.png'))
         executable=Path(self.blender).resolve()
-        return fingerprint({'surface':surface,'instrument':instrument,'code':{str(p.relative_to(CODE_ROOT)):digest(p) for p in code},'artifacts':{str(p.relative_to(self.root)):digest(p) for p in geometry+textures},'blender':[str(executable),executable.stat().st_size,executable.stat().st_mtime_ns]})
+        return fingerprint({'surface':surface,'instrument':instrument,'code':{str(p.relative_to(CODE_ROOT)):digest(p) for p in code},'artifacts':{str(p.relative_to(self.root)):digest(p) for p in geometry},'blender':[str(executable),executable.stat().st_size,executable.stat().st_mtime_ns]})
 
     def render(self, preset=None, candidates=(), view='front', preview=False, comparison=False):
         preset=preset or self.project.configs['instrument']['default_preset']
@@ -109,7 +115,10 @@ class Pipeline:
             raise SpecificationError('Unknown candidate filenames: '+', '.join(sorted(unknown)))
         if preset!='all' and preset not in self.project.configs['finishes']:
             raise SpecificationError(f'Unknown finish preset: {preset}')
-        self.build()
+        requested=candidates or [self.project.configs['instrument']['default_candidate']]
+        if any(self.project.candidates[name].get('crop_review_required') for name in requested):
+            raise SpecificationError('Review the uploaded crop and save wood settings before rendering')
+        self.build(skip_pending=True)
         arguments=['--preset',preset,'--camera',view,'--save-scene']
         for name in candidates:
             arguments+=['--candidate',name]

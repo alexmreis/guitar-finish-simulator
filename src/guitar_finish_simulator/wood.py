@@ -1,9 +1,10 @@
 """Deterministic photograph rectification; editable surveyed corners are in config/."""
-import hashlib, json
+import hashlib, json, math
 from pathlib import Path
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw
+from .photographs import open_photograph
 
 def save(path, a):
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -58,7 +59,7 @@ def prepare_wood(root: Path, input_dir: Path):
     metadata=[]
     for name,spec in specs.items():
         source=input_dir/name
-        rgb=np.array(Image.open(source).convert('RGB'))
+        rgb=np.array(open_photograph(source,spec))
         annotation=rgb.copy(); halves=[]; transforms=[]
         for quad in spec['quads']:
             q=np.float32(quad)
@@ -140,7 +141,7 @@ def prepare_wood(root: Path, input_dir: Path):
         metadata.append(entry)
         (root/'assets/textures/processed'/f'{stem}.json').write_text(json.dumps(entry,indent=2))
     (root/'assets/textures/processed/manifest.json').write_text(json.dumps(metadata,indent=2))
-    sheet=Image.new('RGB',(1600,1000),'#20242a'); draw=ImageDraw.Draw(sheet)
+    sheet=Image.new('RGB',(1600,500*max(2,math.ceil(len(metadata)/4))),'#20242a'); draw=ImageDraw.Draw(sheet)
     for i,entry in enumerate(metadata):
         x=(i%4)*400; y=(i//4)*500
         im=Image.open(root/'assets/textures/bookmatched'/f"{entry['source_filename']}.png")

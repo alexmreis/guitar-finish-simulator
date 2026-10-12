@@ -107,10 +107,10 @@ class Project:
                 missing.append(str(source))
         if missing:
             raise SpecificationError('Missing wood photographs: '+', '.join(missing))
-        from PIL import Image
+        from .photographs import open_photograph
         from .cad import validate_contour
         for name,spec in self.candidates.items():
-            with Image.open(self.resolve(self.data['inputs']['photos'])/name) as image:
+            with open_photograph(self.resolve(self.data['inputs']['photos'])/name,spec) as image:
                 width,height=image.size
             for quad in spec['quads']:
                 if len(quad)!=4 or any(len(p)!=2 for p in quad):

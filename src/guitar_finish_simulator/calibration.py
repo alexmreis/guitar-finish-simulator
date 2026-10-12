@@ -2,7 +2,7 @@
 import hashlib
 from pathlib import Path
 import numpy as np
-from PIL import Image
+from PIL import Image,ImageOps
 from .project import SpecificationError
 
 def sample_reference(path, regions):
@@ -74,6 +74,8 @@ class CalibrationSession:
             controls.pop('alignment_shift_px')
             data['inputs']['candidates'][candidate].pop('alignment_shift_px',None)
         data['inputs']['candidates'][candidate].update(controls)
+        if 'quads' in controls and 'crop_review_required' in data['inputs']['candidates'][candidate]:
+            data['inputs']['candidates'][candidate]['crop_review_required']=False
         self.save(data)
         return data['inputs']['candidates'][candidate]
 
@@ -87,3 +89,54 @@ class CalibrationSession:
         data['config']['surface'].setdefault('placements',{}).setdefault(candidate,{}).update(controls)
         self.save(data)
         return data['config']['surface']['placements'][candidate]
+
+    def upload_wood(self,filename,content,*,bookmatch='simulated',figure_type='flame',rotation=0,width_mm=None):
+        """Register an actual photograph in workspace-owned storage, without rewriting it."""
+        import io
+        import shutil
+        from .project import Project
+        if not filename or Path(filename).name!=filename or '\\' in filename or '\x00' in filename or filename.startswith('.'):
+            raise SpecificationError('Use a source filename without directories')
+        if Path(filename).suffix.lower() not in ['.jpg','.jpeg','.png','.webp']:
+            raise SpecificationError('Upload a JPEG, PNG or WebP photograph')
+        if bookmatch not in ['physical','simulated'] or figure_type not in ['flame','quilt','other']:
+            raise SpecificationError('Choose a single board or physical pair and a figure type')
+        if not 0<len(content)<=25*1024*1024:
+            raise SpecificationError('Photograph must be between 1 byte and 25 MB')
+        data=self.data()
+        if filename.casefold() in {name.casefold() for name in data['inputs']['candidates']}:
+            raise SpecificationError(f'A photograph named {filename} already exists; originals are never overwritten')
+        try:
+            with Image.open(io.BytesIO(content)) as image:
+                if image.format not in ['JPEG','PNG','WEBP']:
+                    raise SpecificationError('Upload a JPEG, PNG or WebP photograph')
+                image.load();width,height=ImageOps.exif_transpose(image).size
+        except (OSError,Image.DecompressionBombError) as error:
+            raise SpecificationError('The uploaded file is not a readable photograph') from error
+        if min(width,height)<64:
+            raise SpecificationError('Photograph must be at least 64 pixels on each side')
+        right,bottom=width-1,height-1
+        quads=[[[0,0],[right,0],[right,bottom],[0,bottom]]]
+        if bookmatch=='physical':
+            seam=right/2
+            quads=[[[0,0],[seam,0],[seam,bottom],[0,bottom]],[[seam,0],[right,0],[right,bottom],[seam,bottom]]]
+        spec={'status':bookmatch,'rotation':int(rotation),'figure_type':figure_type,'quads':quads,
+              'alignment_max_shift_fraction':.045,'crop_review_required':True,'exif_orientation_applied':True}
+        if width_mm is not None:spec['width_mm']=float(width_mm)
+        project=Project.load(self.path)
+        photos=self.folder/'photos';photos.mkdir(exist_ok=True)
+        for name in project.candidates:
+            target=photos/name
+            if not target.exists():shutil.copy2(project.resolve(project.data['inputs']['photos'])/name,target)
+        target=photos/filename
+        if target.exists():
+            raise SpecificationError(f'A photograph named {filename} already exists; originals are never overwritten')
+        with target.open('xb') as stream:stream.write(content)
+        data['inputs']['photos']=str(photos)
+        data['inputs']['candidates'][filename]=spec
+        try:
+            self.save(data)
+        except Exception:
+            target.unlink();raise
+        return {'candidate':filename,'specification':spec,'pixels':[width,height],
+                'source_sha256':hashlib.sha256(content).hexdigest(),'message':'Review the crop corners and orientation, then save wood settings before rendering.'}

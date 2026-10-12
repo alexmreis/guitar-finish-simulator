@@ -1,0 +1,78 @@
+{
+  "timestamp_utc": "2026-10-12T18:58:36.241607+00:00",
+  "tests_run": 42,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "success": true,
+  "includes_actual_blender_execution": true,
+  "seconds": 249.208,
+  "pipeline_code_sha256": "b60ccb2dada607dce61aac70f365dda37a7de7e8b42ed48ef038cd06d00e977f",
+  "failed_tests": [],
+  "model_evidence": {
+    "saved_blend_reopened": true,
+    "blender_version": "5.2.2 LTS",
+    "engine": "CYCLES",
+    "body_vertices": 17457,
+    "body_nonmanifold_edges": 0,
+    "measured_center_thickness_mm": 44.00002956390381,
+    "nominal_rim_mm": 12,
+    "neck_thickness_checks": [
+      {
+        "fret": 1,
+        "measured_mm": 21.50273609161377,
+        "target_mm": 21.5
+      },
+      {
+        "fret": 12,
+        "measured_mm": 22.497299194335938,
+        "target_mm": 22.5
+      }
+    ],
+    "measured_nut_width_mm": 41.90000146627426,
+    "measured_last_fret_width_mm": 55.46114593744278,
+    "radius_surface_verified": true,
+    "scale_mm": 647.7,
+    "fret_positions_verified": true,
+    "frets": 22,
+    "strings": 6,
+    "minimum_string_fret_clearance_mm": 0.3690490520878269,
+    "tuners_left": 4,
+    "tuners_right": 2,
+    "bridge_plate_width_mm": 83.49999785423279,
+    "bridge_plate_depth_mm": 39.99999910593033,
+    "measured_bridge_string_spread_mm": 54.00000140070915,
+    "measured_bridge_pivot_pitch_mm": 56.0000017285347,
+    "measured_bridge_saddle_y_mm": -71.99999690055847,
+    "control_locations_mm": {
+      "Volume push-pull": [
+        75.99999755620956,
+        -72.9999989271164
+      ],
+      "Tone push-pull": [
+        108.99999737739563,
+        -127.00000405311584
+      ]
+    },
+    "packed_body_and_headstock_textures": true,
+    "geometry_signature": "96c425d4cb5d3d01e7b3e1980976bd0c7c71d40d706d6feedf1c8e9d31d913ac",
+    "assumptions": [
+      "Body carve thickness 44 mm center / 12 mm rim approved by user; exact reference guitar measurements unavailable.",
+      "Headstock angle 12 degrees, C neck profile and a set-neck heel are visual approximations; scanned Fender neck data not supplied.",
+      "Latest dimensioned tuner drawing overrides earlier diagrams: 39 mm overall, 22.9 mm envelope, 15.5 mm housing height, 10 mm mounting hole and 7.8 mm fixing offset. Undimensioned post/button depths are inferred visually.",
+      "Gotoh bridge outer dimensions and 54 mm string spread follow supplied drawing; internal machining and exact tremolo routing are not construction drawings.",
+      "Headstock veneer samples the same photographed candidate at the same assumed physical texture scale, with a separate center crop. Actual remnant-cut feasibility is not established.",
+      "Rear/sides use near-black translucent visual finish; underlying body timber is unspecified, so no invented body-grain texture is added."
+    ]
+  },
+  "golden_image_metrics": {
+    "20261009_112804.jpg": {
+      "mean_rgb_error": 0.0,
+      "p99_rgb_error": 0.0
+    },
+    "20261009_113155.jpg": {
+      "mean_rgb_error": 0.0,
+      "p99_rgb_error": 0.0
+    }
+  }
+}

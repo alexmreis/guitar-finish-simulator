@@ -50,3 +50,14 @@ Use small behavior-preserving refactorings, with a green checkpoint before the n
 The local editor was inspected in native Chrome, including actual preview completion. Its saved calibration draft was hashed before/after the server restart and remained unchanged. Development/batch outputs stay under ignored `.work/` workspaces; approved historical root renders remain intact.
 
 The full Umbraeternal `simulate.py batch` command completed in `.work/delivery-umbraeternal`: 32 comparisons, eight default-instrument hero views and eight enlarged PRS views (the default PRS carve view overlaps the two sets, giving 47 distinct image files). All four contact sheets and both hero-view montages were generated. Source/texture hashes, current finish controls, fixed comparison settings and reopened-model signatures passed. Final delivery evidence is in `reports/umbraeternal-delivery.json`.
+
+## Wood upload extension
+
+- Observed the missing HTTP upload behavior, then registered byte-preserved photos in workspace-owned storage with explicit simulated/physical classification and provisional crop corners.
+- Rejected invalid files, unsafe filenames and collisions without modifying source assets or the last valid draft.
+- Observed unreviewed photos being accepted for preview, then required explicit crop review. Pending uploads are excluded from existing-photo previews and block full preparation until reviewed.
+- Observed mismatched phone EXIF dimensions, then shared the oriented coordinate system between validation, the editor and deterministic preprocessing while keeping original bytes intact.
+- The first real upload-render test observed a rebuilt scene/signature. Removed photograph content from the geometry cache key; uploaded and edited photos now render against the same saved instrument. A packed-photo crop-edit test verifies actual image changes and unchanged model timestamp.
+- Observed the ninth photo clipped by the fixed preparation-sheet height, then expanded the sheet and verified portable nine-candidate snapshots.
+- Native Chrome file selection/upload, physical-pair choice, crop review and actual Blender preview completed in an isolated demo workspace.
+- Full verification: 42 tests, zero failures/errors/skips, 249.208 seconds. Approved flame/quilt golden-image mean and p99 errors remain 0.0. Evidence: `reports/wood-upload-verification.json`.
